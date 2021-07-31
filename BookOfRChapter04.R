@@ -158,3 +158,137 @@ cat("The value stored as 'a' is ",a,".",sep="") #print The value stored as 'a' i
 paste("The value stored as 'b' is ",b,".",sep="") #print "The value stored as 'b' is 4.4."
 paste("Is ",a+b," less than 10?  That's totally ",a+b<10,".") #print "Is  7.4  less than 10?  That's totally  TRUE ."
 paste("Is ",a+b," less than 10?  That's totally ",a+b<10,".",sep="") #print "Is 7.4 less than 10?  That's totally TRUE."
+extractthewordstring<-"This is a character string."
+substr(x=extractthewordstring,start=21,stop=27) #print "string."  RM:  start the index count at 1.  Start and stop are inclusive.
+substr(x=extractthewordstring,start=1,stop=4)<-"Replace"
+extractthewordstring #print "Repl is a character string."
+substituteword<-"How much wood could a woodchuck chuck"
+sub(pattern="chuck",replacement="hurl",x=substituteword) #print "How much wood could a woodhurl chuck"
+gsub(pattern="chuck",replacement="hurl",x=substituteword)
+#print "How much wood could a woodhurl hurl" RM:  replaces all chuck with hurl
+#sub and gsub have search options like case-sensitivity or ignore.case and fixed meaning TRUE pattern is matched as is.
+#factors example.  A data set of eight individuals, male or female, and month of birth.
+firstname<-c("Liz","Jolene","Susan","Boris","Rochelle","Tim","Simon","Amy")
+sex.num<-c(0,0,0,1,0,1,1,0)
+sex.char<-c("female","female","female","male","female","male","male","female")
+#All possible values in a finite number of categories are best represented using factors.  firstname is infinite.
+#Use the function factor to create a factor vector
+sex.num.factor<-factor(x=sex.num)
+sex.num.factor
+'''
+[1] 0 0 0 1 0 1 1 0
+Levels: 0 1
+'''
+sex.char.factor<-factor(x=sex.char)
+sex.char.factor
+'''
+[1] female female female male   female male   male   female
+Levels: female male
+'''
+levels(x=sex.num.factor) #print "0" "1"
+levels(x=sex.char.factor) #print "female" "male"
+levels(x=sex.num.factor)<-c("111","222") #relabel females as 111 and males as 222
+sex.num.factor
+'''
+[1] 111 111 111 222 111 222 222 111
+Levels: 111 222
+'''
+sex.char.factor[2:5]
+'''
+[1] female female male   female
+Levels: female male
+'''
+sex.char.factor[c(1:3,5,8)]
+'''
+[1] female female female female female
+Levels: female male
+'''
+sex.num.factor=="222" #[1] FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+firstname[sex.char.factor=="male"] #print "Boris" "Tim"   "Simon"
+firstname[sex.num.factor=="222"] #print "Boris" "Tim"   "Simon"
+sevenmonthsofbirth<-c("Apr","Jan","Dec","Sep","Nov","Jul","Jul","Jun")
+sevenmonthsofbirth[2] #print "Jan"
+sevenmonthsofbirth[3] #print "Dec"
+sevenmonthsofbirth[2]<sevenmonthsofbirth[3] #print FALSE.  Alphametically FALSE is correct.  FALSE is incorrect in order of the calendar months.
+#Create a factor object sevenmonthsofbirth.factor from sevenmonthsofbirth
+monthsfactor<-c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+sevenmonthsofbirth.factor<-factor(x=sevenmonthsofbirth,levels=monthsfactor,ordered=TRUE)
+sevenmonthsofbirth.factor
+'''
+[1] Apr Jan Dec Sep Nov Jul Jul Jun
+12 Levels: Jan < Feb < Mar < Apr < May < Jun < ... < Dec
+'''
+sevenmonthsofbirth.factor[2]
+'''
+[1] Jan
+12 Levels: Jan < Feb < Mar < Apr < May < Jun < ... < Dec
+'''
+sevenmonthsofbirth.factor[3]
+'''
+[1] Dec
+12 Levels: Jan < Feb < Mar < Apr < May < Jun < ... < Dec
+'''
+sevenmonthsofbirth.factor[2]<sevenmonthsofbirth.factor[3] #print TRUE
+combinenumbersone<-c(5.1,3.3,3.1,4)
+combinenumberstwo<-c(4.5,1.2)
+c(combinenumbersone,combinenumbersone) #print 5.1 3.3 3.1 4.0 5.1 3.3 3.1 4.0
+tenmonthsofbirth.factor<-factor(x=c("Oct","Feb","Feb"),levels=levels(sevenmonthsofbirth.factor),ordered=TRUE)
+tenmonthsofbirth.factor
+'''
+[1] Oct Feb Feb
+12 Levels: Jan < Feb < Mar < Apr < May < Jun < ... < Dec
+'''
+sevenmonthsofbirth.factor
+'''
+[1] Apr Jan Dec Sep Nov Jul Jul Jun
+12 Levels: Jan < Feb < Mar < Apr < May < Jun < ... < Dec
+'''
+c(sevenmonthsofbirth.factor,tenmonthsofbirth.factor) #print 4  1 12  9 11  7  7  6 10  2  2.  c function interprets factors as integers.
+levels(sevenmonthsofbirth.factor)
+'''
+ [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep"
+[10] "Oct" "Nov" "Dec"
+'''
+#Use the integers with levels(sevenmonthsofbirth.factor) to retrieve a character vector
+levels(sevenmonthsofbirth.factor)[c(sevenmonthsofbirth.factor,tenmonthsofbirth.factor)]
+'''
+ [1] "Apr" "Jan" "Dec" "Sep" "Nov" "Jul" "Jul" "Jun" "Oct"
+[10] "Feb" "Feb"
+'''
+sevenmonthsofbirth.update<-levels(sevenmonthsofbirth.factor)[c(sevenmonthsofbirth.factor,tenmonthsofbirth.factor)]
+sevenmonthsofbirth.update.factor<-factor(x=sevenmonthsofbirth.update,levels=levels(sevenmonthsofbirth.factor),ordered=TRUE)
+sevenmonthsofbirth.update.factor
+'''
+ [1] Apr Jan Dec Sep Nov Jul Jul Jun Oct Feb Feb
+12 Levels: Jan < Feb < Mar < Apr < May < Jun < ... < Dec
+'''
+tennumberstogroup<-c(0.53,5.4,1.5,3.33,0.45,0.01,2,4.2,1.99,1.01)
+#group numbers small 0 to 1.9, medium 2 to 3.9, large 4 to 6.  Square bracket is inclusion.  Parenthesis is exclusion.Use the cut function and supply the break  intervals or bin intervals to the break argument.
+bins<-c(0,2,4,6)
+cut(x=tennumberstogroup,breaks=bins)
+'''
+[1] (0,2] (4,6] (0,2] (2,4] (0,2] (0,2] (0,2] (4,6] (0,2]
+[10] (0,2]
+Levels: (0,2] (2,4] (4,6]
+#gives a factor which each number assigned an interval.  However, the boundary intervals are back-to-front  Set right to FALSE.
+'''
+cut(x=tennumberstogroup,breaks=bins,right=FALSE)
+'''
+[1] [0,2) [4,6) [0,2) [2,4) [0,2) [0,2) [2,4) [4,6) [0,2)
+[10] [0,2)
+Levels: [0,2) [2,4) [4,6)
+6 is exclusive.  Want 6 inclusive or [4,6].  Set include.lowest to TRUE.
+'''
+cut(x=tennumberstogroup,breaks=bins,right=FALSE,include.lowest=TRUE)
+'''
+[1] [0,2) [4,6] [0,2) [2,4) [0,2) [0,2) [2,4) [4,6] [0,2)
+[10] [0,2)
+Levels: [0,2) [2,4) [4,6]
+'''
+labelsreadeasier<-c("Small","Medium","Large")
+cut(x=tennumberstogroup,breaks=bins,right=FALSE,include.lowest=TRUE,labels=labelsreadeasier)
+'''
+ [1] Small  Large  Small  Medium Small  Small  Medium Large 
+ [9] Small  Small 
+Levels: Small Medium Large
+'''
