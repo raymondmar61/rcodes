@@ -176,3 +176,37 @@ multipleclassexample
 Levels: Small < Regular < Large
 '''
 class(multipleclassexample) #print "ordered" "factor" 
+numbervector1<-1:4
+numbervector1 #print 1 2 3 4
+is.integer(numbervector1) #print TRUE
+is.numeric(numbervector1) #print TRUE
+is.matrix(numbervector1) #print FALSE
+is.data.frame(numbervector1) #print FALSE
+is.vector(numbervector1) #print TRUE
+is.logical(numbervector1) #print FALSE
+addtas1fas0likealgebra<-1:4+c(T,F,F,T)
+addtas1fas0likealgebra #print 2 2 3 5.  1+1, 2+0, 3+0, 4+1 for which T TRUE is 1 and F FALSE is 0.  Implicit coercion.
+numberasstring<-34
+oneletter<-"t"
+paste("Definitely oneletter: ",oneletter,"; definitely numberasstring: ",numberasstring,".",sep="") #print "Definitely oneletter: t; definitely numberasstring: 34."  Implicit coercion.  34 is string.  Works for T True and F False.
+#Explicit coercion
+as.numeric(c(T,F,F,T)) #print 1 0 0 1
+explicitcoercsionlogicaladdition<-1:4+as.numeric(c(T,F,F,T))
+explicitcoercsionlogicaladdition #print 2 2 3 5
+numbertostring<-89
+as.character(numbertostring) #print "89"
+logicaltocharacter<-F
+as.character(logicaltocharacter) #print "FALSE"
+paste("Numbertostring is character: ",as.character(numberasstring),".") #print "Numbertostring is character:  34 ."
+stringnumbertonumeric<-as.numeric("1.35")
+stringnumbertonumeric #print 1.35
+multiplecoercion<-as.logical(as.numeric(c("1","0","1","0","0")))
+multiplecoercion #print TRUE FALSE  TRUE FALSE FALSE
+matrixtosinglevector<-matrix(data=1:4,nrow=2,ncol=2)
+matrixtosinglevector
+'''
+[,1] [,2]
+[1,]    1    3
+[2,]    2    4
+'''
+as.vector(matrixtosinglevector) #print 1 2 3 4
