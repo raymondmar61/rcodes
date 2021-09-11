@@ -174,3 +174,28 @@ hnewvectorassignment
  [1]  99.00 -33.00  -5.10  -5.10  98.00  97.00  96.00   3.00
  [9]   3.75   4.50   5.25  95.00
  '''
+
+#Exercises 2.5
+#a Convert the vector c(2,0.5,1,2,0.5,1,2,0.5,1) to a vector of only 1s, using a vector of length 3.
+extractones<-c(2,0.5,1,2,0.5,1,2,0.5,1)
+extractones[c(3,6,9)] #print 1 1 1  #RM:  vector index starts at 1.
+#official solution
+c(2,0.5,1,2,0.5,1,2,0.5,1)/c(2,0.5,1) #print 1 1 1 1 1 1 1 1 1
+#b Fahrenheit to Celsius C=(5/9)*(F-32).  Convert temperatures 45, 77, 20, 19, 101, 120, and 212 in degrees Fahrenheit to degrees Celsius.
+fahrenheittemps<-c(45,77,20,19,101,120,212)
+celsius<-(fahrenheittemps-32)*(5/9)
+celsius
+'''
+[1]   7.222222  25.000000  -6.666667  -7.222222  38.333333
+[6]  48.888889 100.000000
+'''
+#c Use the vector c(2,4,6) and the vector c(1,2) in conjunction with rep and * to produce the vector c(2,4,6,4,8,12).
+twofoursix<-c(2,4,6)
+onetwo<-c(1,2)
+rep(x=twofoursix,times=2) #print 2 4 6 2 4 6
+rep(x=onetwo,each=3) #print 1 1 1 2 2 2
+solution<-rep(x=twofoursix,times=2)*rep(x=onetwo,each=3)
+solution #print 2  4  6  4  8 12
+#d Overwrite the middle four elements of the resulting vector from (c) with the two recycled values -0.1 and -100, in that order.
+solution[2:5]<-c(-0.1,-100)
+solution #print 2.0   -0.1 -100.0   -0.1 -100.0   12.0
