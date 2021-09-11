@@ -1,4 +1,5 @@
-firstmatrix<-matrix(data=c(-3,2,135,893,0.17,921),nrow=3,ncol=2)
+#Matrix index order starts with one.
+firstmatrix<-matrix(data=c(-3,2,135,893,0.17,921),nrow=3,ncol=2)  #default is go down or column first, then next column to the right.  Go right or row first set byrow=TRUE.
 firstmatrix
 #      [,1]   [,2]
 # [1,]   -3 893.00
@@ -24,7 +25,7 @@ columnbinding
 #      [,1] [,2] [,3]
 # [1,]    1    2    3
 # [2,]    4    5    6
-matrixdimensions<-rbind(c(1,3,4),5:3,c(100,20,90),11:13)
+matrixdimensions<-rbind(c(1,3,4),5:3,c(100,20,90),11:13) #rbind create matrix by row left to right.  Each row separated by a comma.
 matrixdimensions
 # [,1] [,2] [,3]
 # [1,]    1    3    4
@@ -41,7 +42,7 @@ subsettingextraction
 # [1,]  0.3  91.0 -4.2
 # [2,]  4.5   0.1  8.2
 # [3,] 55.3 105.5 27.9
-subsettingextraction[3,2] #return 105.5
+subsettingextraction[3,2] #return 105.5  RM:  subsetting or slicing is [what row, what column].
 subsettingextraction[1,1] #return 0.3
 subsettingextraction[1,] #return 0.3 91.0 -4.2
 subsettingextraction[,2] #return 91.0   0.1 105.5
@@ -49,12 +50,12 @@ subsettingextraction[2:3,]
 # [,1]  [,2] [,3]
 # [1,]  4.5   0.1  8.2
 # [2,] 55.3 105.5 27.9
-subsettingextraction[,c(3,1)]
+subsettingextraction[,c(3,1)] #all rows and column 3 and column 1 in order of 3 and 1.
 # [,1] [,2]
 # [1,] -4.2  0.3
 # [2,]  8.2  4.5
 # [3,] 27.9 55.3
-subsettingextraction[c(3,1),2:3]
+subsettingextraction[c(3,1),2:3]  #extract row 3 and row 1 and get column 2 and column 3
 # [,1] [,2]
 # [1,] 105.5 27.9
 # [2,]  91.0 -4.2
@@ -98,13 +99,13 @@ copysubsettingextraction
 # [1,]   0.3  900  55.3
 # [2,] 100.0  222 900.0
 # [3,]  55.3  900  27.9
-copysubsettingextraction[c(1,3),c(1,3)]<-c(-7,7) #vector recycling.  Replace the column one and column three and row one and row three with two values -7 and 7
+copysubsettingextraction[c(1,3),c(1,3)]<-c(-7,7) #vector recycling.  Replace the column one and column three and row one and row three with two values -7 and 7 in order of -7 first and 7 second.
 copysubsettingextraction
 # [,1] [,2] [,3]
 # [1,]   -7  900   -7
 # [2,]  100  222  900
 # [3,]    7  900    7
-copysubsettingextraction[c(1,3),2:1]<-c(65,-65,88,-88) #vector recycling
+copysubsettingextraction[c(1,3),2:1]<-c(65,-65,88,-88) #vector recycling.  Replace row 1 column 2, row 3 column 2, row 1 column 1 and row 3 column 1 with 65, -65, 88, -88.  Replace row 1 column 2 with 65, row 3 column 2 with -65 , row 1 column 1 with 88, and row 3 column 1 with -88.
 copysubsettingextraction
 # [,1] [,2] [,3]
 # [1,]   88   65   -7
@@ -173,7 +174,7 @@ matrixmultiply2
 # [1,]    3   -3
 # [2,]   -1    1
 # [3,]    1    5
-matrixmultiply1%*%matrixmultiply2
+matrixmultiply1%*%matrixmultiply2 #matrix multiplication is not a simple element-wise calculation, and the standard * operator cannot be used. Instead, you must use R’s matrix product operator, written with percent symbols as %*%.  RM:  matrix multiplication is the math learned in Business Math Spring Semester 1995.
 # [,1] [,2]
 # [1,]    3    9
 # [2,]   21    3
