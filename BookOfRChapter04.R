@@ -89,6 +89,11 @@ addtwotruesoneeach #print 2
 addnegativetrueonetofalse = FALSE-TRUE
 addnegativetrueonetofalse #print -1
 numbersvector<-c(5,-2.3,4,4,4,6,8,10,40221,-8)
+numbersvector
+'''
+ [1]     5  -200     4     4     4     6     8    10 40221
+[10]  -200
+'''
 correspondingindextruesprinted<-numbersvector[c(F,T,F,F,F,F,F,F,F,T)]
 correspondingindextruesprinted #print -2.3 -8.0
 numbersvector<0 #print [1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE [10]  TRUE
@@ -102,11 +107,17 @@ numbersvector[numbersvector<0] <- replacenegativenumber
 numbersvector
 # [1]     5  -200     4     4     4     6     8    10 40221
 # [10]  -200
+#The which function takes a logical vector for the x argument.  It returns the indexes corresponding to the position of any and all TRUE entries.
 which(x=c(T,F,F,T,T)) #print 1 4 5
 findthetrueindexposition<-which(x=numbersvector<0)
 findthetrueindexposition #print 2 10
+numbersvector[findthetrueindexposition] #print -200 -200
+which(x=numbersvector<0) #print 2 10
 numbersvector[which(x=numbersvector<0)] #print -200 -200
+which(x=numbersvector>6) #print 7 8 9
 numbersvector[which(x=numbersvector>6)] #print 8 10 40221
+#Use which to identify the numeric indexes to delete and render them negative.  RM:  I don't think render them negative means a negative number.
+numbersvector[-which(x=numbersvector<0)] #print [1]     5     4     4     4     6     8    10 40221
 amatrix <-matrix(c(0.3,4.5,55.3,91.0,0.1,105.5,-4.2,8.2,27.9),nrow=3,ncol=3)
 amatrix
 # [,1]  [,2] [,3]
