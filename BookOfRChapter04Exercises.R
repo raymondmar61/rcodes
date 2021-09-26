@@ -327,3 +327,218 @@ quxarray
 #d Use vectorobject<-c(6,9,7,3,6,7,9,6,3,6,6,7,1,9,1) to extract every second value.  Can you substitute 0 for FALSE and 1 for TRUE?  No.
 vectorobject[c(F,T)] #print 9 3 7 6 6 7 9
 vectorobject[c(0,1)] #print 6
+
+#Exercise 4.4
+#a Recreate the output
+all26letters<-"The quick brown fox\n \tjumped over\n \t\tthe lazy dogs"
+all26letters #print "The quick brown fox\n \tjumped over\n \t\tthe lazy dogs"
+all26letterscat<-cat("The quck brown fox \n \tjumped over\n \t\tthe lazy dogs")
+'''
+The quck brown fox 
+ 	jumped over
+ 		the lazy dogs
+'''
+all26letterscat #print NULL
+cat(all26letters)
+'''
+The quick brown fox
+ 	jumped over
+ 		thelazy dogs
+'''
+#b Return the following string
+num1<-4
+num2<-0.75
+cat("The result of multiplying",num1,"by",num2,"is",num1*num2) #print The result of multiplying 4 by 0.75 is 3
+#c Replace tdavies with rmar
+originalpath<-"/Users/tdavies/Documents/RBook/"
+sub(pattern="tdavies",replacement="rmar",x=originalpath) #print "/Users/rmar/Documents/RBook/"
+#d replace all wood with metal in newstring
+chuckstring<-"How much wood could a woodchuck chuck"
+newstring<-"if a woodchuck could chuck wood"
+metalnewstring<-gsub(pattern = "wood",replacement = "metal",x=newstring)
+metalnewstring #print "if a metalchuck could chuck metal"
+#e packstring<-"Two 6-packs for $12.99"
+packstring<-"Two 6-packs for $12.99"
+#confirm between the fifth character and tenth character is 6-pack
+substr(x=packstring,start=5,stop=10) #print "6-pack"
+#Change the price to $10.99
+sub(pattern="12.99",replacement="10.99",x=packstring) #print "Two 6-packs for $10.99"
+
+#Exercise 4.5
+#New Zeland government political parties National, Labour, Greens, Maori, Other.  Asked 20 New Zealanders.
+#12 males, 8 females.  1, 5, 6, 7, 12, 14, 15, 16 are females.
+#1, 4, 12, 15, 16 are Labour.  6, 9, 11 are Greens. 10, 20 are Other, Rest are National.
+#a Create two character vectors sex zelanderssex and party as zelandersparty.  RM:  added third character vector all possible poltical parties as zelanderspartyfactor and fourth character vector all possible sexes.
+zealanderssex<-c("F","M","M","M","F","M","F","M","M","M","M","F","M","F","M","F","M","M","M","M")
+zealanderssex
+'''
+ [1] "F" "M" "M" "M" "F" "M" "F" "M" "M" "M" "M" "F" "M" "F"
+[15] "M" "F" "M" "M" "M" "M"
+'''
+zealanderssexfactor<-c("M","F")
+zealanderssexfactor #print "M" "F"
+zealandersparty<-c("Labour","National","National","Labour","National","Greens","National","National","Greens","Other","Greens","Labour","National","National","Labour","Labour","National","National","Labour","Other")
+zealandersparty
+'''
+ [1] "Labour"   "National" "National" "Labour"   "National"
+ [6] "Greens"   "National" "National" "Greens"   "Other"   
+[11] "Greens"   "Labour"   "National" "National" "Labour"  
+[16] "Labour"   "National" "National" "Labour"   "Other" '''
+zealanderspartyfactor<-c("National","Labour","Greens","Maori","Other") #print zelanderspartyfactor<-c("National","Labour","Greens","Maori","Other")
+zealanderspartyfactor #print "National" "Labour"   "Greens"   "Maori"    "Other"  
+#b Create factor vectors based on zealanderssex and zealandersparty
+factor(x=zealanderssex)
+'''
+ [1] F M M M F M F M M M M F M F M F M M M M
+Levels: F M
+'''
+factor(x=zealandersparty)
+'''
+ [1] Labour   National National Labour   National Greens  
+ [7] National National Greens   Other    Greens   Labour  
+[13] National National Labour   Labour   National National
+[19] Labour   Other   
+Levels: Greens Labour National Other
+'''
+factor(x=zealanderssex)
+'''
+ [1] F M M M F M F M M M M F M F M F M M M M
+Levels: F M
+'''
+factor(x=zealanderssex,levels=zealanderssexfactor,ordered=TRUE)
+'''
+ [1] F M M M F M F M M M M F M F M F M M M M
+Levels: M < F
+'''
+factor(x=zealandersparty)
+'''
+ [1] Labour   National National Labour   National Greens  
+ [7] National National Greens   Other    Greens   Labour  
+[13] National National Labour   Labour   National National
+[19] Labour   Other   
+Levels: Greens Labour National Other
+'''
+factor(x=zealandersparty,levels=zealanderspartyfactor,ordered=TRUE)
+'''
+ [1] Labour   National National Labour   National Greens  
+ [7] National National Greens   Other    Greens   Labour  
+[13] National National Labour   Labour   National National
+[19] Labour   Other   
+Levels: National < Labour < Greens < Maori < Other
+'''
+factor(x=zealandersparty,levels=zealanderspartyfactor,ordered=FALSE)
+'''
+ [1] Labour   National National Labour   National Greens  
+ [7] National National Greens   Other    Greens   Labour  
+[13] National National Labour   Labour   National National
+[19] Labour   Other   
+Levels: National Labour Greens Maori Other
+#official solution: Should not use ordered=TRUE, there is no natural or low-to-high ordering here. Factor levels are arranged in the order specified in the levels argument.
+'''
+#c Return a subset
+zealandersmaleindex<-c(zealanderssex=="M")
+zealandersmaleindex
+'''
+ [1] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
+[10]  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
+[19]  TRUE  TRUE
+'''
+zealandersparty[zealandersmaleindex]
+'''
+ [1] "National" "National" "Labour"   "Greens"   "National"
+ [6] "Greens"   "Other"    "Greens"   "National" "Labour"  
+[11] "National" "National" "Labour"   "Other"   
+'''
+zealandersnationalindex<-c(zealandersparty=="National")
+zealandersnationalindex
+'''
+ [1] FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+[10] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+[19] FALSE FALSE
+'''
+zealanderssex[zealandersnationalindex] #print "M" "M" "F" "F" "M" "M" "F" "M" "M"
+#d Add six more New Zealanders
+sixmorezealanderssex<-c("M","M","F","F","F","M")
+sixmorezealandersparty<-c("National","Maori","Maori","Labour","Greens","Labour")
+zealanderssexfactor<-factor(x=zealanderssex)
+zealanderssexfactor
+'''
+[1] F M M M F M F M M M M F M F M F M M M M
+Levels: F M
+'''
+sixmorezealanderssexfactor<-factor(x=sixmorezealanderssex)
+sixmorezealanderssexfactor
+'''
+[1] M M F F F M
+Levels: F M
+'''
+zealanderssexfactorlevel<-levels(zealanderssexfactor)
+zealanderssexfactorlevel #print "F" "M"
+zealanderssexupdate<-factor(x=zealanderssexfactorlevel[c(zealanderssexfactor,sixmorezealanderssexfactor)])
+zealanderssexupdate
+'''
+[1] F M M M F M F M M M M F M F M F M M M M M M F F F M
+Levels: F M
+'''
+zealanderspartyfactor<-factor(x=zealandersparty)
+zealanderspartyfactor
+'''
+ [1] Labour   National National Labour   National Greens  
+ [7] National National Greens   Other    Greens   Labour  
+[13] National National Labour   Labour   National National
+[19] Labour   Other   
+Levels: Greens Labour National Other
+'''
+sixmorezealanderspartyfactor<-factor(x=sixmorezealandersparty)
+sixmorezealanderspartyfactor
+'''
+[1] National Maori    Maori    Labour   Greens   Labour  
+Levels: Greens Labour Maori National
+'''
+zealanderspartyfactorlevel<-levels(zealanderspartyfactor)
+zealanderspartyfactorlevel #print "Greens"   "Labour"   "National" "Other"  
+zealanderspartyupdate<-factor(x=zealanderspartyfactorlevel[c(zealanderspartyfactor,sixmorezealanderspartyfactor)])
+zealanderspartyupdate
+'''
+ [1] Labour   National National Labour   National Greens  
+ [7] National National Greens   Other    Greens   Labour  
+[13] National National Labour   Labour   National National
+[19] Labour   Other    Other    National National Labour  
+[25] Greens   Labour  
+Levels: Greens Labour National Other
+'''
+#e Create a factor with level of confidence Low percentage 0-29, moderate percentage 30-69, high percentage for 70-11.  Percentages Labour wins more seats than National in the next election.
+percentages<-c(93,55,29,100,52,84,56,0,33,52,35,53,55,46, 40,40,56,45,64,31,10,29,40,95,18,61)
+percentages
+'''
+ [1]  93  55  29 100  52  84  56   0  33  52  35  53  55  46
+[15]  40  40  56  45  64  31  10  29  40  95  18  61
+'''
+bins<-c(0,30,70,100)
+labelsreadeasier<-c("Low","Moderate","High")
+cut(x=percentages,breaks=bins,right=TRUE,include.lowest=TRUE)
+'''
+ [1] (70,100] (30,70]  [0,30]   (70,100] (30,70]  (70,100]
+ [7] (30,70]  [0,30]   (30,70]  (30,70]  (30,70]  (30,70] 
+[13] (30,70]  (30,70]  (30,70]  (30,70]  (30,70]  (30,70] 
+[19] (30,70]  (30,70]  [0,30]   [0,30]   (30,70]  (70,100]
+[25] [0,30]   (30,70]
+Levels: [0,30] (30,70] (70,100]
+#RM:  upper end inclusive, lower end exclusive.
+'''
+cut(x=percentages,breaks=bins,right=FALSE,include.lowest=TRUE,labels=labelsreadeasier)
+'''
+ [1] High     Moderate Low      High     Moderate High    
+ [7] Moderate Low      Moderate Moderate Moderate Moderate
+[13] Moderate Moderate Moderate Moderate Moderate Moderate
+[19] Moderate Moderate Low      Low      Moderate High    
+[25] Low      Moderate
+Levels: Low Moderate High
+'''
+#f Extract percentages who are Labour and National.
+labournational<-c(zealanderspartyupdate=="Labour"|zealanderspartyupdate=="National")
+percentages[labournational]
+'''
+ [1]  93  55  29 100  52  56   0  53  55  46  40  40  56  45
+[15]  64  29  40  95  61
+'''
