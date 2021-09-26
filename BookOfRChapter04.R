@@ -179,6 +179,18 @@ gsub(pattern="chuck",replacement="hurl",x=substituteword)
 #print "How much wood could a woodhurl hurl" RM:  replaces all chuck with hurl
 #sub and gsub have search options like case-sensitivity or ignore.case and fixed meaning TRUE pattern is matched as is.
 #factors example.  A data set of eight individuals, male or female, and month of birth.
+'''
+RM:  Imagine a table
+PERSON SEX MONTH OF BIRTH
+Liz Female April
+Jolene Female January
+Susan Female December
+Boris Male September
+Rochelle Female November
+Tim Male July
+Simon Male July
+Amy Female June
+'''
 firstname<-c("Liz","Jolene","Susan","Boris","Rochelle","Tim","Simon","Amy")
 sex.num<-c(0,0,0,1,0,1,1,0)
 sex.char<-c("female","female","female","male","female","male","male","female")
@@ -214,14 +226,15 @@ sex.char.factor[c(1:3,5,8)]
 [1] female female female female female
 Levels: female male
 '''
-sex.num.factor=="222" #[1] FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+sex.num.factor=="222" #print FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+sex.char.factor=="male" #print FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE
 firstname[sex.char.factor=="male"] #print "Boris" "Tim"   "Simon"
 firstname[sex.num.factor=="222"] #print "Boris" "Tim"   "Simon"
 sevenmonthsofbirth<-c("Apr","Jan","Dec","Sep","Nov","Jul","Jul","Jun")
 sevenmonthsofbirth[2] #print "Jan"
 sevenmonthsofbirth[3] #print "Dec"
 sevenmonthsofbirth[2]<sevenmonthsofbirth[3] #print FALSE.  Alphametically FALSE is correct.  FALSE is incorrect in order of the calendar months.
-#Create a factor object sevenmonthsofbirth.factor from sevenmonthsofbirth
+#Create a factor object sevenmonthsofbirth.factor from monthsfactor
 monthsfactor<-c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 sevenmonthsofbirth.factor<-factor(x=sevenmonthsofbirth,levels=monthsfactor,ordered=TRUE)
 sevenmonthsofbirth.factor
@@ -229,6 +242,8 @@ sevenmonthsofbirth.factor
 [1] Apr Jan Dec Sep Nov Jul Jul Jun
 12 Levels: Jan < Feb < Mar < Apr < May < Jun < ... < Dec
 '''
+#sevenmonthsofbirth.factor vector contains the same individual entires at the same index positions as the sevenmothsofbirth vector; however, it has 12 levels even though there are no observations for the levels Feb, Mar, May, Aug, or Oct.
+#You can perform relational comparisons
 sevenmonthsofbirth.factor[2]
 '''
 [1] Jan
@@ -243,6 +258,7 @@ sevenmonthsofbirth.factor[2]<sevenmonthsofbirth.factor[3] #print TRUE
 combinenumbersone<-c(5.1,3.3,3.1,4)
 combinenumberstwo<-c(4.5,1.2)
 c(combinenumbersone,combinenumbersone) #print 5.1 3.3 3.1 4.0 5.1 3.3 3.1 4.0
+#add three more months to sevenmonthsofbirth to create  tenmonthsofbirth.  Multiple R code procedures.
 tenmonthsofbirth.factor<-factor(x=c("Oct","Feb","Feb"),levels=levels(sevenmonthsofbirth.factor),ordered=TRUE)
 tenmonthsofbirth.factor
 '''
@@ -254,13 +270,13 @@ sevenmonthsofbirth.factor
 [1] Apr Jan Dec Sep Nov Jul Jul Jun
 12 Levels: Jan < Feb < Mar < Apr < May < Jun < ... < Dec
 '''
-c(sevenmonthsofbirth.factor,tenmonthsofbirth.factor) #print 4  1 12  9 11  7  7  6 10  2  2.  c function interprets factors as integers.
+c(sevenmonthsofbirth.factor,tenmonthsofbirth.factor) #print 4  1 12  9 11  7  7  6 10  2  2.  c function interprets factors as integers.  Combine sevenmonthsofbirth and tenmonthsofbirth.
 levels(sevenmonthsofbirth.factor)
 '''
  [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep"
 [10] "Oct" "Nov" "Dec"
 '''
-#Use the integers with levels(sevenmonthsofbirth.factor) to retrieve a character vector
+#Use the integers with levels(sevenmonthsofbirth.factor) to retrieve a character vector.  RM:  it's like indexing in Python.
 levels(sevenmonthsofbirth.factor)[c(sevenmonthsofbirth.factor,tenmonthsofbirth.factor)]
 '''
  [1] "Apr" "Jan" "Dec" "Sep" "Nov" "Jul" "Jul" "Jun" "Oct"
@@ -288,8 +304,8 @@ cut(x=tennumberstogroup,breaks=bins,right=FALSE)
 [1] [0,2) [4,6) [0,2) [2,4) [0,2) [0,2) [2,4) [4,6) [0,2)
 [10] [0,2)
 Levels: [0,2) [2,4) [4,6)
-6 is exclusive.  Want 6 inclusive or [4,6].  Set include.lowest to TRUE.
 '''
+#6 is exclusive.  Want 6 inclusive or [4,6].  Set include.lowest to TRUE.
 cut(x=tennumberstogroup,breaks=bins,right=FALSE,include.lowest=TRUE)
 '''
 [1] [0,2) [4,6] [0,2) [2,4) [0,2) [0,2) [2,4) [4,6] [0,2)
