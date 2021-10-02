@@ -184,4 +184,40 @@ componentlist$oldlist[[3]] #print "Don Quixote"
 #official solution
 componentlist$oldlist[[3]]<-"Don Quixote"
 
-
+#Exercise 5.2
+#a Create a data frame
+dframe<-data.frame(person=c("Stan","Francine","Steve","Roger","Hayley","Klaus"),sex=c("M","F","M","M","F","M"),funny=c("High","Med","Low","High","Med","Med")) #person is a character vector, sex is a factor with levels F and M, funny is a factor with levels Low, Med, and High
+#b add age column
+addcolumnage<-c(41,41,15,1600,21,60)
+dframe<-cbind(dframe,addcolumnage)
+dframe
+'''
+    person sex funny addcolumnage
+1     Stan   M  High           41
+2 Francine   F   Med           41
+3    Steve   M   Low           15
+4    Roger   M  High         1600
+5   Hayley   F   Med           21
+6    Klaus   M   Med           60
+'''
+#c Rearrange columns from left to right person, age, sex, funny
+dframecolumnsrearranged<-dframe[c("person","addcolumnage","sex","funny")]
+dframecolumnsrearranged
+'''
+    person addcolumnage sex funny
+1     Stan           41   M  High
+2 Francine           41   F   Med
+3    Steve           15   M   Low
+4    Roger         1600   M  High
+5   Hayley           21   F   Med
+6    Klaus           60   M   Med
+'''
+#d Delete age.mon column from the Family Guy data frame.  Save as a new data frame variable mydata2.
+mydata2<-mydataframe[mydataframe,-5]
+#e Combine mydata2 with dframe.  RM:  assume the columns are aligned from left to right person, age, sex, funny and columns names matches.
+combinemydata2anddframecolumnsrearranged<-rbind(mydata2,dframecolumnsrearranged)
+#f Extract from combinemydata2anddframecolumnsrearranged the names and ages are female and funny is Med or High.  Return person and age columns only.
+combinemydata2anddframecolumnsrearranged[combinemydata2anddframecolumnsrearranged$sex=="F"&(combinemydata2anddframecolumnsrearranged$funny=="Med"|combinemydata2anddframecolumnsrearranged$funny=="High"),c=("person","age")]
+#g Extract from combinemydata2anddframecolumnsrearranged person's name begins with the letter S.
+#official solution
+combinemydata2anddframecolumnsrearranged[substr(x=combinemydata2anddframecolumnsrearranged$person,start = 1,stop=1]=="S",] #substr can be applied to a vector of multiple character strings
