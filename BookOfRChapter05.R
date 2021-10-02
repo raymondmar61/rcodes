@@ -1,6 +1,6 @@
-#Separate each list element by a comma
-listvariable<-list(matrix(data=1:4,nrow=2,ncol=2),c(T,F,T,T),"hello")
-listvariable
+#Separate each list element or object by a comma
+threelistobjects<-list(matrix(data=1:4,nrow=2,ncol=2),c(T,F,T,T),"hello")
+threelistobjects
 '''
 [[1]]
      [,1] [,2]
@@ -13,32 +13,32 @@ listvariable
 [[3]]
 [1] "hello"
 '''
-length(x=listvariable) #print 3
+length(x=threelistobjects) #print 3
 #member reference to retrieve a component from a list.  Like Python indexing.
-listvariable[[1]]
+threelistobjects[[1]]
 '''
 [[1]]
      [,1] [,2]
 [1,]    1    3
 [2,]    2    4
 '''
-listvariable[[3]]
+threelistobjects[[3]]
 '''
 [[1]]
 [1] "hello"
 '''
-listvariable[[1]]+5.5
+threelistobjects[[1]]+5.5
 '''
      [,1] [,2]
 [1,]  6.5  8.5
 [2,]  7.5  9.5
 '''
-listvariable[[1]][1,2] #print 3
-listvariable[[1]][2,] #print [1] 2 4
-listvariable[[1]][,1] #print [1] 1 2
-cat(listvariable[[3]]," you!") #print hello you!
-listvariable[[3]]<-paste(listvariable[[3]],"replace string insert string")
-listvariable
+threelistobjects[[1]][1,2] #print 3
+threelistobjects[[1]][2,] #print [1] 2 4
+threelistobjects[[1]][,1] #print [1] 1 2
+cat(threelistobjects[[3]]," you!") #print hello you!
+threelistobjects[[3]]<-paste(threelistobjects[[3]],"replace string insert string")
+threelistobjects
 '''
 [[1]]
      [,1] [,2]
@@ -52,7 +52,7 @@ listvariable
 [1] "hello replace string insert string"
 '''
 #list slicing
-secondthirdcomponent<-listvariable[c(2,3)]
+secondthirdcomponent<-threelistobjects[c(2,3)]
 secondthirdcomponent
 '''
 [[1]]
@@ -61,8 +61,8 @@ secondthirdcomponent
 [[2]]
 [1] "hello replace string insert string"
 '''
-names(listvariable)<-c("matrixlist","logicallist","stringlist")
-listvariable
+names(threelistobjects)<-c("matrixlist","logicallist","stringlist")
+threelistobjects
 '''
 $matrixlist
      [,1] [,2]
@@ -75,12 +75,12 @@ $logicallist
 $stringlist
 [1] "hello replace string insert string"
 '''
-listvariable["stringlist"]
+threelistobjects["stringlist"]
 '''
 $stringlist
 [1] "hello replace string insert string"
 '''
-namecomponentscreatinglist<-list(lociallisttwo=c(listvariable[[2]],T,T,T,F),greeting="g'day mate",multiplytwo=listvariable$matrixlist*2)
+namecomponentscreatinglist<-list(lociallisttwo=c(threelistobjects[[2]],T,T,T,F),greeting="g'day mate",multiplytwo=threelistobjects$matrixlist*2)
 namecomponentscreatinglist
 '''
 $lociallisttwo
@@ -95,8 +95,8 @@ $multiplytwo
 [2,]    4    8
 '''
 names(namecomponentscreatinglist) #print [1] "lociallisttwo" "greeting"      "multiplytwo"  
-#Add components to an existing list using the dollar operator and a new name.  Nesting.  Define a fourth component to the namecomponentscreatinglist called nestedlistuselistvariable.
-namecomponentscreatinglist$nestedlistuselistvariable<-listvariable
+#Add components to an existing list using the dollar operator and a new name.  Nesting.  Define a fourth component to the namecomponentscreatinglist called nestedlistusethreelistobjects which uses threelistobjects.
+namecomponentscreatinglist$nestedlistusethreelistobjects<-threelistobjects
 namecomponentscreatinglist
 '''
 $lociallisttwo
@@ -110,19 +110,20 @@ $multiplytwo
 [1,]    2    6
 [2,]    4    8
 
-$nestedlistuselistvariable
-$nestedlistuselistvariable$matrixlist
+$nestedlistusethreelistobjects
+$nestedlistusethreelistobjects$matrixlist
      [,1] [,2]
 [1,]    1    3
 [2,]    2    4
 
-$nestedlistuselistvariable$logicallist
+$nestedlistusethreelistobjects$logicallist
 [1]  TRUE FALSE  TRUE  TRUE
 
-$nestedlistuselistvariable$stringlist
+$nestedlistusethreelistobjects$stringlist
 [1] "hello replace string insert string"
 '''
-namecomponentscreatinglist$nestedlistuselistvariable$logicallist[1:3] #print [1]  TRUE FALSE  TRUE
+#The three R code returns the first three elements 
+namecomponentscreatinglist$nestedlistusethreelistobjects$logicallist[1:3] #print [1]  TRUE FALSE  TRUE
 namecomponentscreatinglist[[4]][[2]][1:3] #print [1]  TRUE FALSE  TRUE
 namecomponentscreatinglist[[4]]$logicallist[1:3] #print [1]  TRUE FALSE  TRUE
 namecomponentscreatinglist[[4]]
