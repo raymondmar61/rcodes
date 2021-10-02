@@ -236,7 +236,7 @@ mydataframe[mydataframe$sex=="M",]
 5 Stewie   1   M  High                      12
 6  Brian   7   M   Med                      84
 '''
-mydataframe[mydataframe$sex=="M",-3]
+mydataframe[mydataframe$sex=="M",-3] #Excluded third column sex
 '''
   person age funny addnewcolumnageinmonths
 1  Peter  42  High                     504
@@ -245,7 +245,7 @@ mydataframe[mydataframe$sex=="M",-3]
 6  Brian   7   Med                      84
 '''
 mydataframe[mydataframe$sex=="M",1] #print "Peter"  "Chris"  "Stewie" "Brian" 
-mydataframe[mydataframe$sex=="M",-2]
+mydataframe[mydataframe$sex=="M",-2] #Excluded second column age
 '''
   person sex funny addnewcolumnageinmonths
 1  Peter   M  High                     504
@@ -253,7 +253,7 @@ mydataframe[mydataframe$sex=="M",-2]
 5 Stewie   M  High                      12
 6  Brian   M   Med                      84
 '''
-mydataframe[mydataframe$sex=="M",c("person","age","funny")]
+mydataframe[mydataframe$sex=="M",c("person","age","funny")] #Specified columns person, age, and funny
 '''
   person age funny
 1  Peter  42  High
