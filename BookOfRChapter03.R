@@ -117,17 +117,17 @@ copysubsettingextraction
 # [1,]    0   65   -7
 # [2,]  100    0  900
 # [3,]  -88  -65    0
-transposematarix<-rbind(c(2,5,2),c(6,1,4))
-transposematarix
+transposematrix<-rbind(c(2,5,2),c(6,1,4))
+transposematrix
 # [,1] [,2] [,3]
 # [1,]    2    5    2
 # [2,]    6    1    4
-t(transposematarix)
+t(transposematrix)
 # [,1] [,2]
 # [1,]    2    6
 # [2,]    5    1
 # [3,]    2    4
-t(t(transposematarix))
+t(t(transposematrix))
 # [,1] [,2] [,3]
 # [1,]    2    5    2
 # [2,]    6    1    4
@@ -189,7 +189,7 @@ inversionmatrix
 # [,1] [,2]
 # [1,]    3    1
 # [2,]    4    2
-solve(inversionmatrix) #Use solve for inverting a matarix
+solve(inversionmatrix) #Use solve for inverting a matrix
 # [,1] [,2]
 # [1,]    1 -0.5
 # [2,]   -2  1.5
