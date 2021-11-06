@@ -177,3 +177,192 @@ $beta
 [1] 3 5 9
 '''
 storelistbeta$beta #print 3 5 9
+#Exercise 6.3
+#a Identify the class of the following objects and state whether the class is explicitly or implicitly defined.
+onei<-array(data=1:36,dim=c(3,3,4))
+onei
+'''
+, , 1
+
+     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,]   10   13   16
+[2,]   11   14   17
+[3,]   12   15   18
+
+, , 3
+
+     [,1] [,2] [,3]
+[1,]   19   22   25
+[2,]   20   23   26
+[3,]   21   24   27
+
+, , 4
+
+     [,1] [,2] [,3]
+[1,]   28   31   34
+[2,]   29   32   35
+[3,]   30   33   36
+'''
+class(onei) #print array
+attributes(onei) #RM:  implicit
+'''
+$dim
+[1] 3 3 4
+'''
+twoii<-as.vector(onei)
+twoii
+'''
+[1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
+[23] 23 24 25 26 27 28 29 30 31 32 33 34 35 36
+'''
+class(twoii) #print integer
+attributes(twoii) #print NULL #RM:  implicit
+threeiii<-as.character(twoii)
+threeiii
+'''
+ [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13"
+[14] "14" "15" "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26"
+[27] "27" "28" "29" "30" "31" "32" "33" "34" "35" "36"
+'''
+class(threeiii) #print character
+attributes(threeiii) #print NULL #RM:  implicit
+fouriv<-as.factor(threeiii)
+fouriv
+'''
+ [1] 1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22
+[23] 23 24 25 26 27 28 29 30 31 32 33 34 35 36
+36 Levels: 1 10 11 12 13 14 15 16 17 18 19 2 20 21 22 23 24 25 ... 9
+'''
+class(fouriv) #print factor
+attributes(fouriv) #RM:  explicit
+'''
+$levels
+ [1] "1"  "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "2"  "20"
+[14] "21" "22" "23" "24" "25" "26" "27" "28" "29" "3"  "30" "31" "32"
+[27] "33" "34" "35" "36" "4"  "5"  "6"  "7"  "8"  "9" 
+
+$class
+[1] "factor"
+'''
+fivev<-twoii+c(-0.1,0.1)
+fivev
+'''
+ [1]  0.9  2.1  2.9  4.1  4.9  6.1  6.9  8.1  8.9 10.1 10.9 12.1 12.9
+[14] 14.1 14.9 16.1 16.9 18.1 18.9 20.1 20.9 22.1 22.9 24.1 24.9 26.1
+[27] 26.9 28.1 28.9 30.1 30.9 32.1 32.9 34.1 34.9 36.1
+'''
+class(fivev) #print numeric
+attributes(fivev) #print NULL #RM:  implicit
+#b For each object in a, find the sum of the result of calling is.numeric and is.integer on it separately.  Next, turn the collection of the five results into a factor with levels 0, 1, and 2 identified by the results themselves.  Compare the factor vector with the result of coercing it to a numeric vector.
+is.numeric(onei) #print TRUE
+is.integer(onei) #print TRUE
+oneisum<-is.numeric(onei)+is.integer(onei) #print 2
+oneisum #print 2
+is.numeric(twoii) #print TRUE
+is.integer(twoii) #print TRUE
+twoiisum<-is.numeric(twoii)+is.integer(twoii)
+twoiisum #print 2
+is.numeric(threeiii) #print FALSE
+is.integer(threeiii) #print FALSE
+threeiiisum<-is.numeric(threeiii)+is.integer(threeiii)
+threeiiisum #print 0
+is.numeric(fouriv) #print FALSE
+is.integer(fouriv) #print FALSE
+fourivsum<-is.numeric(fouriv)+is.integer(fouriv)
+fourivsum #print 0
+is.numeric(fivev) #print TRUE
+is.integer(fivev) #print FALSE
+fivevsum<-is.numeric(fivev)+is.integer(fivev)
+fivevsum #print 1
+factorsumresults<-factor(x=c(oneisum,twoiisum,threeiiisum,fourivsum,fivevsum))  #official solution factorsumresults<-factor(x=c(oneisum,twoiisum,threeiiisum,fourivsum,fivevsum),levels=c(0,1,2))
+factorsumresults
+'''
+[1] 2 2 0 0 1
+Levels: 0 1 2
+'''
+as.numeric(factorsumresults) #print 3 3 1 1 2 #RM:  3 is the position of 2 in Levels, 1 is the position of 0 in Levels, 2 is the position of 1 in Levels.  Levels: 0 1 2 --> 1 2 3
+#c Convert the matrix to the following one line string.
+matrixtoonelinestring<-matrix(data=c(2:13),nrow=3,ncol=4)
+matrixtoonelinestring
+'''
+     [,1] [,2] [,3] [,4]
+[1,]    2    5    8   11
+[2,]    3    6    9   12
+[3,]    4    7   10   13
+'''
+as.character(matrixtoonelinestring) #print "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13"
+c(as.character(matrixtoonelinestring[1,1:4]),as.character(matrixtoonelinestring[2,1:4]),as.character(matrixtoonelinestring[3,1:4])) #print "2"  "5"  "8"  "11" "3"  "6"  "9"  "12" "4"  "7"  "10" "13"
+#official solution
+as.character(as.vector(t(matrixtoonelinestring))) #print "2"  "5"  "8"  "11" "3"  "6"  "9"  "12" "4"  "7"  "10" "13".  RM:  transpose matrix is Chapter 3 t(name of matrix).
+#d Create the following matrix
+numbersvector<-c(34,23,33,42,41,0,1,1,0,0,1,2,1,1,2)
+numbersvector #print 34 23 33 42 41  0  1  1  0  0  1  2  1  1  
+coercematrix<-matrix(data=numbersvector,nrow=5,ncol=3,byrow=FALSE)
+coercematrix
+'''
+     [,1] [,2] [,3]
+[1,]   34    0    1
+[2,]   23    1    2
+[3,]   33    1    1
+[4,]   42    0    1
+[5,]   41    0    2
+'''
+#i Coerce to a data frame
+as.data.frame(coercematrix)
+'''
+  V1 V2 V3
+1 34  0  1
+2 23  1  2
+3 33  1  1
+4 42  0  1
+5 41  0  2
+'''
+#ii Coerce the second column of the data frame to be logical value
+coercematrixdataframe<-as.data.frame(coercematrix)
+coercematrixdataframe
+'''
+V1 V2 V3
+1 34  0  1
+2 23  1  2
+3 33  1  1
+4 42  0  1
+5 41  0  2
+'''
+coercematrixdataframe[2]
+'''
+  V2
+1  0
+2  1
+3  1
+4  0
+5  0
+'''
+as.logical(coercematrixdataframe[2]) #print Error: 'list' object cannot be coerced to type 'logical'
+as.logical((as.numeric(coercematrixdataframe[2])) #print Error: 'list' object cannot be coerced to type 'double'
+typeof(coercematrixdataframe[2]) #print list
+coercematrixdataframe$V2 #print 0 1 1 0 0
+typeof(coercematrixdataframe$V2) #print double
+as.logical((coercematrixdataframe$V2)) #print FALSE  TRUE  TRUE FALSE FALSE
+#iii Coerce the third column of the data frame to be factor-valued.  RM:  Convert third column to a factor.  Factor is Chapter 4.
+coercematrixdataframe[3]
+'''
+  V3
+1  1
+2  2
+3  1
+4  1
+5  2
+'''
+coercematrixdataframe$V3 #print 1 2 1 1 2
+as.factor(coercematrixdataframe$V3)
+'''
+[1] 1 2 1 1 2
+Levels: 1 2
+'''
