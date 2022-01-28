@@ -175,3 +175,236 @@ dataframefrommatrix
 # 2  2  5  8 11
 # 3  3  6  9 12
 is.data.frame(dataframefrommatrix) #print TRUE
+
+#Data entry or assign data assign
+shortcutassignmentoperator <- ("Press Alt+- to insert an assignment operator.")
+shortcutassignmentoperator #print "Press Alt+- to insert an assignment operator."
+typeof(shortcutassignmentoperator) #print character
+zerototen <- 0:10
+zerototen #print 0  1  2  3  4  5  6  7  8  9 10
+typeof(zerototen) #print integer
+tentozero <- 10:0
+tentozero #print 10  9  8  7  6  5  4  3  2  1  0
+(sequenceonetoten <- seq(10)) #print 1  2  3  4  5  6  7  8  9 10.  RM:  save space I surround by paranthesis to return the results
+(sequence30to0bythrees <- seq(30,0, by=-3)) #print 30 27 24 21 18 15 12  9  6  3  0.  RM:  save space I surround by paranthesis to return the results
+(cconcatenate <- c(5,4,1,6,7,2,2,3,2,8)) #print 5 4 1 6 7 2 2 3 2 8
+scantoinputdatalive <- scan() #Enter data in console.  Press enter after each number to input.  Press enter twice to stop inputting.
+# > scantoinputdatalive <- scan()
+# 1: 54
+# 2: 23
+# 3: 100
+# 4: 480
+# 5: 
+#   Read 4 items
+# > 
+scantoinputdatalive
+# > scantoinputdatalive
+# [1]  54  23 100 480
+(repeattruefivetimes <- rep(TRUE,5)) #print TRUE TRUE TRUE TRUE TRUE
+(replicatetruefalsefivetimes <- rep(c(TRUE,FALSE),5)) #print TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE
+(replicatetruefalseinorderfivetimes <- rep(c(TRUE,FALSE),each=5)) #print TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+
+#Import data
+#Import CSV, txt text, Excel, and JSON.
+#Instructor uses rio R Input Output.  rio combines all of R's import functions into one simple utility.
+library(rio)
+userioimportcsv <- import("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.csv")
+head(userioimportcsv) #return the first five rows of the .csv file
+# Month Mozart Beethoven Bach
+# 1 2004-01     12         8   15
+# 2 2004-02     12         9   15
+# 3 2004-03     12         9   14
+# 4 2004-04     12         8   14
+# 5 2004-05     11         9   13
+# 6 2004-06      9         7   12
+typeof(userioimportcsv) #print list
+useriotoimporttxt <- import("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.txt")
+head(useriotoimporttxt)
+# Month Mozart Beethoven Bach
+# 1 2004-01     12         8   15
+# 2 2004-02     12         9   15
+# 3 2004-03     12         9   14
+# 4 2004-04     12         8   14
+# 5 2004-05     11         9   13
+# 6 2004-06      9         7   12
+typeof(useriotoimporttxt) #print list
+useriotoimportexcel <- import("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.xlsx")
+head(useriotoimportexcel)
+# Month Mozart Beethoven Bach
+# 1 2004-01     12         8   15
+# 2 2004-02     12         9   15
+# 3 2004-03     12         9   14
+# 4 2004-04     12         8   14
+# 5 2004-05     11         9   13
+# 6 2004-06      9         7   12
+typeof(useriotoimportexcel) #print list
+View(userioimportcsv) #opens a tab to view the .csv file from useriotoimportcsv.  Also click on the icon on the right in Environment tab.
+readtextfiletabdelimitederror <- read.table("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.txt", header = TRUE) #return Warning message:In scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  :          number of items read is not a multiple of the number of columns
+readtextfiletabdelimitedcorrect <- read.table("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.txt", header = TRUE, sep="\t")
+head(readtextfiletabdelimitedcorrect)
+# Month Mozart Beethoven Bach
+# 1 2004-01     12         8   15
+# 2 2004-02     12         9   15
+# 3 2004-03     12         9   14
+# 4 2004-04     12         8   14
+# 5 2004-05     11         9   13
+# 6 2004-06      9         7   12
+readcsvfile <- read.csv("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.csv", header=TRUE)
+head(readcsvfile)
+# Month Mozart Beethoven Bach
+# 1 2004-01     12         8   15
+# 2 2004-02     12         9   15
+# 3 2004-03     12         9   14
+# 4 2004-04     12         8   14
+# 5 2004-05     11         9   13
+# 6 2004-06      9         7   12
+typeof(readcsvfile) #print list
+View(readcsvfile) #opens a tab to view mbb.csv file
+
+#Factors
+vectorx1<-1:3
+vectorx1 #print 1 2 3
+(vectory<-1:9) #print 1 2 3 4 5 6 7 8 9.  Surround entire R code by paranthesis returns the result
+combinevectorstodataframe <-cbind.data.frame(vectorx1,vectory)
+typeof(combinevectorstodataframe) #print list
+combinevectorstodataframe
+# vectorx1 vectory
+# 1        1       1
+# 2        2       2
+# 3        3       3
+# 4        1       4
+# 5        2       5
+# 6        3       6
+# 7        1       7
+# 8        2       8
+# 9        3       9
+is.data.frame(combinevectorstodataframe) #print TRUE
+typeof(combinevectorstodataframe$vectorx1) #print integer
+str(combinevectorstodataframe) #str is structure
+# 'data.frame':	9 obs. of  2 variables:
+# $ vectorx1: int  1 2 3 1 2 3 1 2 3
+# $ vectory : int  1 2 3 4 5 6 7 8 9
+factorsx2 <- as.factor(c(1:3))
+factorsx2
+# [1] 1 2 3
+# Levels: 1 2 3
+(combinetodataframe2 <- cbind.data.frame(factorsx2,vectory)) #surround entire R code by paranthesis returns the result
+# factorsx2 vectory
+# 1         1       1
+# 2         2       2
+# 3         3       3
+# 4         1       4
+# 5         2       5
+# 6         3       6
+# 7         1       7
+# 8         2       8
+# 9         3       9
+typeof(combinetodataframe2) #print list
+typeof(combinetodataframe2$factorsx2) #print integer
+str(combinetodataframe2) #str is structure
+# 'data.frame':	9 obs. of  2 variables:
+# $ factorsx2: Factor w/ 3 levels "1","2","3": 1 2 3 1 2 3 1 2 3
+# $ vectory  : int  1 2 3 4 5 6 7 8 9
+vectorx2<-c(1:3)
+vectorx2 #print 1 2 3
+combinetodataframe3 <- cbind.data.frame(vectorx2,vectory)
+combinetodataframe3
+# vectorx2 vectory
+# 1        1       1
+# 2        2       2
+# 3        3       3
+# 4        1       4
+# 5        2       5
+# 6        3       6
+# 7        1       7
+# 8        2       8
+# 9        3       9
+combinetodataframe3$vectorx2<-factor(combinetodataframe3$vectorx2,levels=c(1,2,3)) #convert a vector to factor
+combinetodataframe3
+# vectorx2 vectory
+# 1        1       1
+# 2        2       2
+# 3        3       3
+# 4        1       4
+# 5        2       5
+# 6        3       6
+# 7        1       7
+# 8        2       8
+# 9        3       9
+typeof(combinetodataframe3) #print integer
+str(combinetodataframe3)
+# 'data.frame':	9 obs. of  2 variables:
+# $ vectorx2: Factor w/ 3 levels "1","2","3": 1 2 3 1 2 3 1 2 3
+# $ vectory : int  1 2 3 4 5 6 7 8 9
+vectorx3<-c(1:3)
+combinetodataframe4<-cbind.data.frame(vectorx3,vectory)
+combinetodataframe4
+# vectorx3 vectory
+# 1        1       1
+# 2        2       2
+# 3        3       3
+# 4        1       4
+# 5        2       5
+# 6        3       6
+# 7        1       7
+# 8        2       8
+# 9        3       9
+typeof(combinetodataframe4) #print list
+combinetodataframe4$vectorx3<-factor(combinetodataframe4$vectorx3,levels=c(1,2,3),labels=c("factorlabel1macOSis1","convertvectorx3toafactorWindowsis2","Linuxis3"))
+combinetodataframe4
+# vectorx3 vectory
+# 1               factorlabel1macOSis1       1
+# 2 convertvectorx3toafactorWindowsis2       2
+# 3                           Linuxis3       3
+# 4               factorlabel1macOSis1       4
+# 5 convertvectorx3toafactorWindowsis2       5
+# 6                           Linuxis3       6
+# 7               factorlabel1macOSis1       7
+# 8 convertvectorx3toafactorWindowsis2       8
+# 9                           Linuxis3       9
+typeof(combinetodataframe4) #print list
+str(combinetodataframe4)
+# 'data.frame':	9 obs. of  2 variables:
+# $ vectorx3: Factor w/ 3 levels "factorlabel1macOSis1",..: 1 2 3 1 2 3 1 2 3
+# $ vectory : int  1 2 3 4 5 6 7 8 9
+#ordered factors
+vectorx4<-c(1:3)
+combinetodataframe5<-cbind.data.frame(vectorx4,vectory)
+combinetodataframe5
+# vectorx4 vectory
+# 1        1       1
+# 2        2       2
+# 3        3       3
+# 4        1       4
+# 5        2       5
+# 6        3       6
+# 7        1       7
+# 8        2       8
+# 9        3       9
+typeof(combinetodataframe5) #print list
+str(combinetodataframe5)
+# 'data.frame':	9 obs. of  2 variables:
+# $ vectorx4: int  1 2 3 1 2 3 1 2 3
+# $ vectory : int  1 2 3 4 5 6 7 8 9
+combinetodataframe5$vectorx4<-ordered(combinetodataframe5$vectorx4,levels=c(3,1,2), labels=c("No is 3","Maybe is 1","Yes is 2")) #convert a vector to factor ordered or assigned
+combinetodataframe5$vectorx4
+# [1] Maybe is 1 Yes is 2   No is 3    Maybe is 1 Yes is 2   No is 3    Maybe is 1
+# [8] Yes is 2   No is 3   
+# Levels: No is 3 < Maybe is 1 < Yes is 2
+typeof(combinetodataframe5$vectorx4) #print integer
+combinetodataframe5
+# vectorx4 vectory
+# 1 Maybe is 1       1
+# 2   Yes is 2       2
+# 3    No is 3       3
+# 4 Maybe is 1       4
+# 5   Yes is 2       5
+# 6    No is 3       6
+# 7 Maybe is 1       7
+# 8   Yes is 2       8
+# 9    No is 3       9
+typeof(combinetodataframe5) #print list
+str(combinetodataframe5)
+# 'data.frame':	9 obs. of  2 variables:
+# $ vectorx4: Ord.factor w/ 3 levels "No is 3"<"Maybe is 1"<..: 2 3 1 2 3 1 2 3 1
+# $ vectory : int  1 2 3 4 5 6 7 8 9
