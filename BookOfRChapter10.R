@@ -296,3 +296,202 @@ blankmatrixna
 [2,]   54   48   42   36
 [3,]   63   56   49   42
 '''
+whilecounter <- 5
+while(whilecounter<10){
+  print(whilecounter)
+  whilecounter <- whilecounter+1
+}
+'''
+[1] 5
+[1] 6
+[1] 7
+[1] 8
+[1] 9
+'''
+counter <- 1
+mynumbersvector <- c(4,5,1,2,6,2,4,6,6,2)
+while(mynumbersvector[counter]<=5){
+  print(mynumbersvector[[counter]])
+  counter <- counter+1
+}
+'''
+[1] 4
+[1] 5
+[1] 1
+[1] 2
+'''
+diag(mynumbersvector[1])
+'''
+     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    1    0
+[4,]    0    0    0    1
+'''
+mylist <- list()
+counter <- 1
+mynumbersvector <- c(4,5,1,2,6,2,4,6,6,2)
+while(mynumbersvector[counter]<=5){
+  print(mynumbersvector[[counter]])
+  mylist[[counter]] <- diag(mynumbersvector[counter])
+  counter <- counter+1
+}
+'''
+[1] 4
+[1] 5
+[1] 1
+[1] 2
+'''
+mylist
+'''
+[[1]]
+     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    1    0
+[4,]    0    0    0    1
+
+[[2]]
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    0    0    0
+[2,]    0    1    0    0    0
+[3,]    0    0    1    0    0
+[4,]    0    0    0    1    0
+[5,]    0    0    0    0    1
+
+[[3]]
+     [,1]
+[1,]    1
+
+[[4]]
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+'''
+sumrowscolumnsmatrix <- matrix(1:12,4,3)
+sumrowscolumnsmatrix
+'''
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
+'''
+sum(sumrowscolumnsmatrix) #print 78
+sum(sumrowscolumnsmatrix[2,]) #print 18
+sum(sumrowscolumnsmatrix[,3]) #print 42
+row.totals <- rep("I'm not repeated",times=nrow(sumrowscolumnsmatrix))
+row.totals #print "I'm not repeated" "I'm not repeated" "I'm not repeated" "I'm not repeated"
+for(i in 1:nrow(sumrowscolumnsmatrix)){
+  row.totals[i] <- sum(sumrowscolumnsmatrix[i,])
+}
+row.totals #print "15" "18" "21" "24"
+row.totals <- rep(NULL,times=nrow(sumrowscolumnsmatrix))
+row.totals #print NULL
+for(i in 1:nrow(sumrowscolumnsmatrix)){
+  row.totals[i] <- sum(sumrowscolumnsmatrix[i,])
+}
+row.totals #print 15 18 21 24
+#Use apply like a Python nested for loop.  X is the object to cycle through.  MARGIN is the integer which flags which margin of X to operate on such as rows or columns.  FUN is the function to perform on each MARGIN.  MARGIN index follows the positional order of the dimension for matrices and arrays:  1 is rows, 2 is columns, 3 is layers, 4 is blocks.
+row.totalsapply <- apply(X=sumrowscolumnsmatrix,MARGIN=1,FUN=sum)
+row.totalsapply #print 15 18 21 24
+column.totalsapply <- apply(X=sumrowscolumnsmatrix,MARGIN=2,FUN=sum)
+column.totalsapply #print 10 26 42
+threedimensionarray <- array(1:18,dim=c(3,3,2))
+threedimensionarray
+'''
+, , 1
+
+     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,]   10   13   16
+[2,]   11   14   17
+[3,]   12   15   18
+'''
+apply.threedimensionarrayshorten <- apply(threedimensionarray,3,FUN=diag) #extracts the diagonal elements of each matrix layer returns a vector which are returned as columns to the new matrix
+apply.threedimensionarrayshorten
+'''
+     [,1] [,2]
+[1,]    1   10
+[2,]    5   14
+[3,]    9   18
+'''
+diamondstextfile <- read.table("/home/mar/R/diamondsbook1.txt",header=TRUE,sep=",")
+diamondstextfile[1:5,]
+'''
+   Color Price
+1 Yellow  1595
+2   Blue  1488
+3  White  1469
+4  Green  1481
+5  White  1803
+'''
+#Add the elements from the Price column.  The factor vector Color column is passed to INDEX.  The function FUN=sum adds the Price by Color.
+sumpricebycolor <- tapply(diamondstextfile$Price,INDEX=diamondstextfile$Color,FUN=sum)
+sumpricebycolor
+'''
+  Blue  Green Orange    Red  White Yellow 
+ 21237  26071  23263  20152  33347  21802 
+'''
+mylist <- list(aa=c(3.4,1),bb=matrix(1:4,2,2),cc=matrix(c(T,T,F,T,F,F),3,2),dd="string here",ee=list(c("hello","you"),matrix(c("hello","there"))),ff=matrix(c("red","green","blue","yellow")))
+#lapply operates member by member on a list.  The example below checks each list in mylist for a matrix.  margin or index are not required for lapply.  The returned value is itself a list.
+isthelistamatrix <- lapply(mylist,FUN=is.matrix)
+isthelistamatrix
+'''
+$aa
+[1] FALSE
+
+$bb
+[1] TRUE
+
+$cc
+[1] TRUE
+
+$dd
+[1] FALSE
+
+$ee
+[1] FALSE
+
+$ff
+[1] TRUE
+'''
+#sapply returns the same result as lapply in an array form
+isthelistamatrix <- sapply(mylist,FUN=is.matrix)
+isthelistamatrix
+'''
+   aa    bb    cc    dd    ee    ff 
+FALSE  TRUE  TRUE FALSE FALSE  TRUE 
+'''
+sumrowscolumnsmatrix <- matrix(1:12,4,3)
+sumrowscolumnsmatrix
+'''
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
+'''
+sortcolumn <- apply(sumrowscolumnsmatrix,2,sort,decreasing=TRUE)
+sortcolumn
+'''
+     [,1] [,2] [,3]
+[1,]    4    8   12
+[2,]    3    7   11
+[3,]    2    6   10
+[4,]    1    5    9
+'''
+sortrow <- apply(sumrowscolumnsmatrix,1,sort,decreasing=TRUE)
+sortrow
+'''
+     [,1] [,2] [,3] [,4]
+[1,]    9   10   11   12
+[2,]    5    6    7    8
+[3,]    1    2    3    4
+'''
