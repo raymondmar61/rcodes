@@ -197,3 +197,272 @@ for(eachsimpsonscharactervector in simpsonscharactervector){
   [1] 56
   '''
 }
+#10.3c
+#RM:  run each mylist separately in the for loop below
+mylist <- list(aa=c(3.4,1),bb=matrix(1:4,2,2),cc=matrix(c(T,T,F,T,F,F),3,2),dd="string here",ee=list(c("hello","you"),matrix(c("hello","there"))),ff=matrix(c("red","green","blue","yellow")))
+# mylist <- list("tricked you",as.vector(matrix(1:6,3,2)))
+# mylist <- list(list(1,2,3),list(c(3,2),2),list(c(1,2),matrix(c(1,2))),rbind(1:10,100:91))
+namecomponents<-matrix(data=names(mylist))
+class(mylist) #print list
+countermatricesinlist <- 0
+for(i in 1:length(mylist)){
+  checkcontainmatrix <- mylist[[i]]
+  print(checkcontainmatrix)
+  if(is.matrix(checkcontainmatrix)){
+    cat(namecomponents[[i]],"is a matrix\n")
+    countermatricesinlist <- countermatricesinlist+1
+  } else if (is.list(checkcontainmatrix)){ #check for a sublist inside mylist list.  If there is a sublist, then check for a matrix in sublist.
+    for(j in 1:length(checkcontainmatrix)){
+      if(is.matrix(checkcontainmatrix[[j]])){
+        cat(namecomponents[[i]],"found another matrix in a sublist\n")
+        countermatricesinlist <- countermatricesinlist+1
+      }
+    }
+  }
+}
+countermatricesinlist
+'''
+[1] 3.4 1.0
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+bb is a matrix
+      [,1]  [,2]
+[1,]  TRUE  TRUE
+[2,]  TRUE FALSE
+[3,] FALSE FALSE
+cc is a matrix
+[1] "string here"
+[[1]]
+[1] "hello" "you"  
+
+[[2]]
+     [,1]   
+[1,] "hello"
+[2,] "there"
+
+ee found another matrix in a sublist
+     [,1]    
+[1,] "red"   
+[2,] "green" 
+[3,] "blue"  
+[4,] "yellow"
+ff is a matrix
+> countermatricesinlist
+[1] 4
+'''
+
+#Exercises 10.4
+#10.4a
+mylist <- list()
+counter <- 1
+# mynumbersvector <- c(2,2,2,2,5,2)
+# mynumbersvector <- 2:20
+mynumbersvector <- c(10,1,10,1,2)
+while(mynumbersvector[counter]<=5){
+  print(mynumbersvector[[counter]])
+  mylist[[counter]] <- diag(mynumbersvector[counter])
+  counter <- counter+1
+}
+mylist #print list() for mynumbersvector <- c(10,1,10,1,2) because while loop exits at while(mynumbersvector[1]<=5) is false because while(10<=5) for which mynumbersvector[1] is 10.
+#10.4b
+factorial <- 12
+answer <- 1
+if(factorial == 0){
+  answer <- 1
+} else {
+  while(factorial>0){
+      answer = factorial * answer
+      factorial <- factorial-1
+  }
+}
+answer #print 479001600.  RM: 479001600 is 12!.
+#10.4c
+#Extract mystring in its entirity or at the end of the second "e" excluding the second "e"
+substr(x=mystring,start=3,stop=3) #print f
+nchar(mystring) #print 7
+# mystring <- "R fever"
+# mystring <- "beautiful"
+# mystring <- "ECCENTRIC"
+# mystring <- "ElAbOrAte"
+mystring <- "eeeeek!"
+index <- 1
+ecount <- 0
+result <- mystring
+while(ecount<2&&index<=nchar(mystring)){
+  print(substr(x=mystring,start=index,stop=index))
+  secondlettere <-substr(x=mystring,start=index,stop=index)
+  if(secondlettere == "e"|| secondlettere == "E"){
+    ecount <- ecount+1
+    print(ecount)
+  }
+  if(ecount==2){
+    result<-substr(x=mystring,start=1,stop=index-1)
+  }
+  index <- index+1
+}
+result #print e
+
+mystring <- "R fever"
+for(x in 1:7){
+  print(substr(x=mystring,start=x,stop=x))
+  letter <- substr(x=mystring,start=x,stop=x)
+}
+'''
+[1] "R"
+[1] " "
+[1] "f"
+[1] "e"
+[1] "v"
+[1] "e"
+[1] "r"
+'''
+#Exercises 10.5
+#10.5a Calculate the product of the column elements
+sortrow <- apply(sumrowscolumnsmatrix,1,sort,decreasing=TRUE)
+sortrow
+'''
+     [,1] [,2] [,3] [,4]
+[1,]    9   10   11   12
+[2,]    5    6    7    8
+[3,]    1    2    3    4
+'''
+multiplycolumns <- apply(sortrow,2,FUN=prod)
+multiplycolumns #print 45 120 231 384
+#10.5b Convert the for loop to an implict loop
+matlist <- list(matrix(c(T,F,T,T),2,2),matrix(c("a","c","b","z","p","q"),3,2),matrix(1:8,2,4))
+matlist
+'''
+[[1]]
+      [,1] [,2]
+[1,]  TRUE TRUE
+[2,] FALSE TRUE
+
+[[2]]
+     [,1] [,2]
+[1,] "a"  "z" 
+[2,] "c"  "p" 
+[3,] "b"  "q" 
+
+[[3]]
+     [,1] [,2] [,3] [,4]
+[1,]    1    3    5    7
+[2,]    2    4    6    8
+'''
+for(i in 1:length(matlist)){
+  matlist[[i]] <- t(matlist[[i]])
+}
+matlist
+'''
+[[1]]
+     [,1]  [,2]
+[1,] TRUE FALSE
+[2,] TRUE  TRUE
+
+[[2]]
+     [,1] [,2] [,3]
+[1,] "a"  "c"  "b" 
+[2,] "z"  "p"  "q" 
+
+[[3]]
+     [,1] [,2]
+[1,]    1    2
+[2,]    3    4
+[3,]    5    6
+[4,]    7    8
+'''
+matlist <- list(matrix(c(T,F,T,T),2,2),matrix(c("a","c","b","z","p","q"),3,2),matrix(1:8,2,4))
+implicitlooptranspose <- lapply(matlist,FUN=t) #lapply operates member by member on a list.
+implicitlooptranspose
+'''
+[[1]]
+     [,1]  [,2]
+[1,] TRUE FALSE
+[2,] TRUE  TRUE
+
+[[2]]
+     [,1] [,2] [,3]
+[1,] "a"  "c"  "b" 
+[2,] "z"  "p"  "q" 
+
+[[3]]
+     [,1] [,2]
+[1,]    1    2
+[2,]    3    4
+[3,]    5    6
+[4,]    7    8
+'''
+#10.5c1
+#four dimensional array comprised of three blocks.  Each block is an array made up of two layers of 4x4 matrices.
+fourdimensionalarray <- array(96:1,dim=c(4,4,2,3))
+fourdimensionalarray
+'''
+, , 1, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]   96   92   88   84
+[2,]   95   91   87   83
+[3,]   94   90   86   82
+[4,]   93   89   85   81
+
+, , 2, 1
+
+     [,1] [,2] [,3] [,4]
+[1,]   80   76   72   68
+[2,]   79   75   71   67
+[3,]   78   74   70   66
+[4,]   77   73   69   65
+
+, , 1, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]   64   60   56   52
+[2,]   63   59   55   51
+[3,]   62   58   54   50
+[4,]   61   57   53   49
+
+, , 2, 2
+
+     [,1] [,2] [,3] [,4]
+[1,]   48   44   40   36
+[2,]   47   43   39   35
+[3,]   46   42   38   34
+[4,]   45   41   37   33
+
+, , 1, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]   32   28   24   20
+[2,]   31   27   23   19
+[3,]   30   26   22   18
+[4,]   29   25   21   17
+
+, , 2, 3
+
+     [,1] [,2] [,3] [,4]
+[1,]   16   12    8    4
+[2,]   15   11    7    3
+[3,]   14   10    6    2
+[4,]   13    9    5    1
+'''
+#Implicit loop obtain the diagonal elements of all second layers matrices only
+secondlayerdiagonals <- apply(fourdimensionalarray[,,2,],3,diag)
+secondlayerdiagonals
+'''
+     [,1] [,2] [,3]
+[1,]   80   48   16
+[2,]   75   43   11
+[3,]   70   38    6
+[4,]   65   33    1
+'''
+#10.5c2
+#Return the dimensions of each of the three matrices formed by accessing the four column of every matrix, wrapped by another implicit loop which finds the row sums of that returned structure.
+dimensionsofeachmatrix <- apply(fourdimensionalarray[,4,,],3,dim)
+dimensionsofeachmatrix
+'''
+     [,1] [,2] [,3]
+[1,]    4    4    4
+[2,]    2    2    2
+'''
+dimensionsofeachmatrix <- apply(dimensionsofeachmatrix,1,sum)
+dimensionsofeachmatrix #print 12 6
