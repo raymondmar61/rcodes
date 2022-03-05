@@ -1,3 +1,13 @@
+'''
+Run from beginning of line Alt+Ctrl+B, run from line to end Alt+Ctrl+E, run all Alt+Ctrl+R,
+run code selection Alt+Ctrl+T.
+Run function definition Alt+Ctrl+F.
+Rerun previous Alt+Ctrl+P.
+Ctrl+D deletes line.  Ctrl+Shift+D duplicates line.
+Alt+- assignment operator <-.
+Ctrl+Up Arrow or Ctrl+Down Arrow works as scrolling in Sublime Text
+'''
+
 #Vector
 vectorone<-c(1,2,3,4,5)
 vectorone #print 1 2 3 4 5
