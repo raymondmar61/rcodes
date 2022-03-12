@@ -466,3 +466,292 @@ dimensionsofeachmatrix
 '''
 dimensionsofeachmatrix <- apply(dimensionsofeachmatrix,1,sum)
 dimensionsofeachmatrix #print 12 6
+
+#Exercises 10.6
+#10.6a write a while loop without using break or next
+fivevariable <- 5
+numbers <- c(2,3,1.1,4,0,4.1,3)
+counter = 1
+while(counter <= length(numbers)){
+  if(numbers[counter]==0){
+    print("Skip the zero number")
+  } else {
+    result <- fivevariable/numbers[counter]
+    print(result)
+  }
+  counter=counter+1
+}
+'''
+[1] 2.5
+[1] 1.666667
+[1] 4.545455
+[1] 1.25
+[1] "Skip the zero number"
+[1] 1.219512
+[1] 1.666667
+'''
+#10.6a write an ifelse function returning the same results above
+fivevariable <- 5
+numbers <- c(2,3,1.1,4,0,4.1,3)
+shortcutifelsefunction <- ifelse(test=numbers==0,yes="Skip the zero number",no=fivevariable/numbers)
+shortcutifelsefunction
+[1] "2.5"                  "1.66666666666667"     "4.54545454545454"    
+[4] "1.25"                 "Skip the zero number" "1.21951219512195"    
+[7] "1.66666666666667" 
+#10.6b write a for loop using a break declaration
+mylistforidentitymatrices <- list()
+mynumbersvector <- c(4,5,1,2,6,2,4,6,6,2)
+for(i in 1:length(mynumbersvector)){
+  if(mynumbersvector[i]>5){
+    break
+  } else {
+    mylistforidentitymatrices[[i]] <- diag(mynumbersvector[i])
+  }
+}
+mylistforidentitymatrices
+'''
+[[1]]
+     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    1    0
+[4,]    0    0    0    1
+
+[[2]]
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    0    0    0
+[2,]    0    1    0    0    0
+[3,]    0    0    1    0    0
+[4,]    0    0    0    1    0
+[5,]    0    0    0    0    1
+
+[[3]]
+     [,1]
+[1,]    1
+
+[[4]]
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+'''
+#10.6b write a repeat statement
+mylistforidentitymatrices <- list()
+mynumbersvector <- c(4,5,1,2,6,2,4,6,6,2)
+counter <- 1
+repeat{
+  if(mynumbersvector[counter]>5){
+    break
+  } else {
+    #print(diag(mynumbersvector[counter])) #RM:  also works without saving to the list mylistforidentitymatrices
+    mylistforidentitymatrices[[counter]] <- diag(mynumbersvector[counter])
+    counter <- counter + 1
+  }
+}
+mylistforidentitymatrices
+'''
+[[1]]
+     [,1] [,2] [,3] [,4]
+[1,]    1    0    0    0
+[2,]    0    1    0    0
+[3,]    0    0    1    0
+[4,]    0    0    0    1
+
+[[2]]
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    0    0    0    0
+[2,]    0    1    0    0    0
+[3,]    0    0    1    0    0
+[4,]    0    0    0    1    0
+[5,]    0    0    0    0    1
+
+[[3]]
+     [,1]
+[1,]    1
+
+[[4]]
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
+'''
+#10.6c
+#Nested pair loops R code
+counter <- 0
+resultlist <- list()
+for(i in 1:length(matricesnumberslist1)){
+  for(j in 1:length(matricesnumberslist2)){
+    counter <- counter+1
+    if(ncol(matricesnumberslist1[[i]])!=nrow(matricesnumberslist2[[j]])){
+      resultlist[[counter]] <- "Not possible"
+      next
+    }
+    resultlist[[counter]] <- matricesnumberslist1[[i]]%*%matricesnumberslist2[[j]]
+  }
+}
+resultlist
+#Nested pair loops R code first run
+matricesnumberslist1 <- list(matrix(1:4,2,2), matrix(1:4),matrix(1:8,4,2))
+matricesnumberslist1
+'''
+[[1]]
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+[[2]]
+     [,1]
+[1,]    1
+[2,]    2
+[3,]    3
+[4,]    4
+
+[[3]]
+     [,1] [,2]
+[1,]    1    5
+[2,]    2    6
+[3,]    3    7
+[4,]    4    8
+'''
+matricesnumberslist2 <- matricesnumberslist1
+counter <- 0
+resultlist <- list()
+for(i in 1:length(matricesnumberslist1)){
+  for(j in 1:length(matricesnumberslist2)){
+    counter <- counter+1
+    if(ncol(matricesnumberslist1[[i]])!=nrow(matricesnumberslist2[[j]])){
+      resultlist[[counter]] <- "Not possible"
+      next
+    }
+    resultlist[[counter]] <- matricesnumberslist1[[i]]%*%matricesnumberslist2[[j]]
+  }
+}
+resultlist
+[[1]]
+[,1] [,2]
+[1,]    7   15
+[2,]   10   22
+
+[[2]]
+[1] "Not possible"
+
+[[3]]
+[1] "Not possible"
+
+[[4]]
+[1] "Not possible"
+
+[[5]]
+[1] "Not possible"
+
+[[6]]
+[1] "Not possible"
+
+[[7]]
+[,1] [,2]
+[1,]   11   23
+[2,]   14   30
+[3,]   17   37
+[4,]   20   44
+
+[[8]]
+[1] "Not possible"
+
+[[9]]
+[1] "Not possible"
+#Nested pair loops R code second run
+matricesnumberslist1 <- list(matrix(1:4,2,2), matrix(2:5,2,2),matrix(1:16,4,2))
+matricesnumberslist2 <- list(matrix(1:8,2,4),matrix(10:7,2,2),matrix(9:2,4,2))
+matricesnumberslist1
+'''
+[[1]]
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+[[2]]
+     [,1] [,2]
+[1,]    2    4
+[2,]    3    5
+
+[[3]]
+     [,1] [,2]
+[1,]    1    5
+[2,]    2    6
+[3,]    3    7
+[4,]    4    8
+'''
+matricesnumberslist2
+'''
+[[1]]
+     [,1] [,2] [,3] [,4]
+[1,]    1    3    5    7
+[2,]    2    4    6    8
+
+[[2]]
+     [,1] [,2]
+[1,]   10    8
+[2,]    9    7
+
+[[3]]
+     [,1] [,2]
+[1,]    9    5
+[2,]    8    4
+[3,]    7    3
+[4,]    6    2
+'''
+counter <- 0
+resultlist <- list()
+for(i in 1:length(matricesnumberslist1)){
+  for(j in 1:length(matricesnumberslist2)){
+    counter <- counter+1
+    if(ncol(matricesnumberslist1[[i]])!=nrow(matricesnumberslist2[[j]])){
+      resultlist[[counter]] <- "Not possible"
+      next
+    }
+    resultlist[[counter]] <- matricesnumberslist1[[i]]%*%matricesnumberslist2[[j]]
+  }
+}
+resultlist
+'''
+[[1]]
+     [,1] [,2] [,3] [,4]
+[1,]    7   15   23   31
+[2,]   10   22   34   46
+
+[[2]]
+     [,1] [,2]
+[1,]   37   29
+[2,]   56   44
+
+[[3]]
+[1] "Not possible"
+
+[[4]]
+     [,1] [,2] [,3] [,4]
+[1,]   10   22   34   46
+[2,]   13   29   45   61
+
+[[5]]
+     [,1] [,2]
+[1,]   56   44
+[2,]   75   59
+
+[[6]]
+[1] "Not possible"
+
+[[7]]
+     [,1] [,2] [,3] [,4]
+[1,]   11   23   35   47
+[2,]   14   30   46   62
+[3,]   17   37   57   77
+[4,]   20   44   68   92
+
+[[8]]
+     [,1] [,2]
+[1,]   55   43
+[2,]   74   58
+[3,]   93   73
+[4,]  112   88
+
+[[9]]
+[1] "Not possible"
+'''
