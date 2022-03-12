@@ -495,3 +495,88 @@ sortrow
 [2,]    5    6    7    8
 [3,]    1    2    3    4
 '''
+fivevariable <- 5
+numbers <- c(2,3,1.1,4,0,4.1,3)
+repeatfunction <- rep(NA,length(numbers))
+repeatfunction #print NA NA NA NA NA NA NA
+is.finite(100) #print TRUE
+for(i in 1:length(numbers)){
+  result <- fivevariable/numbers[i]
+  if(is.finite(result)){
+    print(result)
+  } else {
+    print("Cant divide by zero")
+    break
+  }
+}
+'''
+[1] 2.5
+[1] 1.666667
+[1] 4.545455
+[1] 1.25
+[1] "Cant divide by zero"
+'''
+for(i in 1:length(numbers)){
+  if(numbers[i]==0){
+    print("Skip the zero number")
+    next
+  }
+  result <- fivevariable/numbers[i]
+  print(result)
+}
+'''
+[1] 2.5
+[1] 1.666667
+[1] 4.545455
+[1] 1.25
+[1] "Skip the zero number"
+[1] 1.219512
+[1] 1.666667
+'''
+outerforloop <- 5:7
+outerforloop #print 5 6 7
+innerforloop <- 9:6
+innerforloop #print 9 8 7 6
+blankmatrix <- matrix(NA,nrow=length(outerforloop),ncol=length(innerforloop))
+blankmatrix
+'''
+     [,1] [,2] [,3] [,4]
+[1,]   NA   NA   NA   NA
+[2,]   NA   NA   NA   NA
+[3,]   NA   NA   NA   NA
+'''
+for(i in 1:length(outerforloop)){
+  for(j in 1:length(innerforloop)){
+    result <- outerforloop[i]*innerforloop[j]
+    if(result>=54){
+      cat("Pass or skip using next because result at least 54",result,"\n")
+      next
+    }
+    blankmatrix[i,j] <- result
+  }
+}
+'''
+Pass or skip using next because result at least 54  54 
+Pass or skip using next because result at least 54  63 
+Pass or skip using next because result at least 54  56 
+'''
+blankmatrix
+'''
+     [,1] [,2] [,3] [,4]
+[1,]   45   40   35   30
+[2,]   NA   48   42   36
+[3,]   NA   NA   49   42
+'''
+#next and break work the same way in while loops
+fibonaccia <- 1
+fibonaccib <- 1
+repeat{
+  temp <- fibonaccia+fibonaccib
+  fibonaccia <- fibonaccib
+  fibonaccib <- temp
+  cat(fibonaccib,", ",sep="")
+  if(fibonaccib>150){
+    cat("Break now\n")
+    break
+  }
+} #print 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, Break now
