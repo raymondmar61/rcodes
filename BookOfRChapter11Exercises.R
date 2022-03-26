@@ -60,3 +60,52 @@ factorialfunction(5) #print 120
 factorialfunction(12) #print 479001600
 factorialfunction(0) #print 1
 factorialfunction(-6) #print 1
+
+#Exercises 11.2
+#11.2a
+compoundinterest <- function(principalp,annualinterestratei,interestpaidyearlyt=12,yearsy,plotchart=TRUE,...){
+  finalamount <- principalp*((1+(annualinterestratei/(100*interestpaidyearlyt)))^(interestpaidyearlyt*yearsy))
+  xaxisyears <- 1:yearsy
+  yaxisfinalamount <- c()
+  for(i in 1:yearsy){
+    yaxisfinalamount[i] <- principalp*((1+(annualinterestratei/(100*interestpaidyearlyt)))^(interestpaidyearlyt*i))
+  }
+  print(finalamount)
+  if(plotchart){
+    plot(xaxisyears,yaxisfinalamount,type="s",...)
+  } else {
+    return(finalamount)
+  }
+}
+#i
+compoundinterest(5000,4.4,12,10,plotchart=F) #return 7757.291
+#ii
+compoundinterest(100,22.9,12,20) #return 9339.589
+#iii create a chart with two lines to compare ii compounded monthly and iii compounded annually #RM:  looked at solution
+compoundinterestfromiiannually <- compoundinterest(100,22.9,1,20) #return 6180.7
+lines(1:20,compoundinterestfromiiannually,lty=2,type="s") #RM:  it seems manually set the x-axis years from 1 to 20.  Also it looks like the chart is incorrect.
+legend("topleft",lty=c(1,2),legend=c("monthly interest exercise ii","annual interest exercise iii")) #added the legend at the top left.
+
+#11.2b
+#Quadratic equation variable x.
+quadraticfunction <- function(k1,k2,k3){
+  if(any(c(missing(k1),missing(k2),missing(k3)))){
+    return("k1, k2, and/or k3 are missing")
+  }
+  x <- (k2^2)-(4*k1*k3)
+  if(x<0){
+    print("No solution.  No real roots.")
+  } else if(x==0){
+    return(-k2/(2*k1))
+  } else {
+    #two solutions are returned
+    return(c((-k2-(x^0.5))/(2*k1),(-k2+(x^0.5))/(2*k1)))
+  }
+}
+quadraticfunction(2,-1,-5) #return -1.350781  1.850781
+quadraticfunction(1,1,1) #return No solution.  No real roots.
+quadraticfunction(1.3,-8,-3.13) #return -0.3691106  6.5229567
+quadraticfunction(2.25,-3,1) #return 0.6666667
+quadraticfunction(1.4,-2.2,-5.1) #return -1.278312  2.849740
+quadraticfunction(-5,10.11,-9.9) #return No solution.  No real roots.
+quadraticfunction(0) #return k1, k2, and/or k3 are missing
