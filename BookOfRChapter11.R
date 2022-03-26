@@ -373,3 +373,90 @@ matrixmultiplicationfunction3(listthirdtestfunction,diag(2))
 [2,]    2    4    6    8
 [1] "missing function found stringnotamatrix2 variable missing argument input returned TRUE"
 '''
+fibonacciellipses <- function(thresh, plotit=TRUE,...){ #plotit=TRUE is the default value
+  fibseq <- c(1,1)
+  counter <- 2
+  repeat{
+    fibseq <- c(fibseq,fibseq[counter-1]+fibseq[counter])
+    print(fibseq)
+    counter <- counter+1
+    if(fibseq[counter]>thresh){
+      break
+    }
+  }
+  if(plotit){
+    #graph line chart
+    plot(1:length(fibseq),fibseq,...) #x-axis is 1:length(fibseq).  y-axis is fibseq.  The ellipsis represents additional arguments a user may pass for plot()
+  } else {
+    return(fibseq)
+  }
+}
+fibonacciellipses(150)
+'''
+[1] 1 1 2
+[1] 1 1 2 3
+[1] 1 1 2 3 5
+[1] 1 1 2 3 5 8
+[1]  1  1  2  3  5  8 13
+[1]  1  1  2  3  5  8 13 21
+[1]  1  1  2  3  5  8 13 21 34
+[1]  1  1  2  3  5  8 13 21 34 55
+[1]  1  1  2  3  5  8 13 21 34 55 89
+[1]   1   1   2   3   5   8  13  21  34  55  89 144
+[1]   1   1   2   3   5   8  13  21  34  55  89 144 233
+'''
+#additional arguments to fibonacciellipses function including chart labels, x shaped dots, and a dash shaped line
+fibonacciellipses(150, type="b",pch=4,lty=2,main="Chart title",ylab="y-axis labels Fibonacci sequence",xlab="x-axis label Term (n)")
+'''
+[1] 1 1 2
+[1] 1 1 2 3
+[1] 1 1 2 3 5
+[1] 1 1 2 3 5 8
+[1]  1  1  2  3  5  8 13
+[1]  1  1  2  3  5  8 13 21
+[1]  1  1  2  3  5  8 13 21 34
+[1]  1  1  2  3  5  8 13 21 34 55
+[1]  1  1  2  3  5  8 13 21 34 55 89
+[1]   1   1   2   3   5   8  13  21  34  55  89 144
+[1]   1   1   2   3   5   8  13  21  34  55  89 144 233
+'''
+unpackargumentsellipsis <- function(...){
+  x <- list(...)
+  cat("Here is ellipsis ... in its entirety as a list:\n")
+  print(x)
+  cat("The names of ellipsis ... are:",names(x),"\n")
+  cat("The classes of ellipsis ... are:\n")
+  print(sapply(x,class))
+}
+unpackargumentsellipsis(amatrix=matrix(1:4,2,2),bboolean=TRUE,cvector=c("two","strings"),dfactor=factor(c(1,1,2,1)))
+'''
+Here is ellipsis ... in its entirety as a list:
+$amatrix
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+$bboolean
+[1] TRUE
+
+$cvector
+[1] "two"     "strings"
+
+$dfactor
+[1] 1 1 2 1
+Levels: 1 2
+
+The names of ellipsis ... are: amatrix bboolean cvector dfactor 
+The classes of ellipsis ... are:
+$amatrix
+[1] "matrix" "array" 
+
+$bboolean
+[1] "logical"
+
+$cvector
+[1] "character"
+
+$dfactor
+[1] "factor"
+'''
