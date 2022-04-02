@@ -109,3 +109,100 @@ quadraticfunction(2.25,-3,1) #return 0.6666667
 quadraticfunction(1.4,-2.2,-5.1) #return -1.278312  2.849740
 quadraticfunction(-5,10.11,-9.9) #return No solution.  No real roots.
 quadraticfunction(0) #return k1, k2, and/or k3 are missing
+
+#11.3a Insert an exclamation mark separated by an empty string or no spaces  after each letter writing a disposable function using lapply
+letterlist <- list("a",c("b","c","d","e"),"f",c("g","h","i"))
+print(letterlist)
+'''
+[[1]]
+[1] "a"
+
+[[2]]
+[1] "b" "c" "d" "e"
+
+[[3]]
+[1] "f"
+
+[[4]]
+[1] "g" "h" "i"
+'''
+lapply(letterlist,FUN = function(x) paste(x,"!",sep=""))
+'''
+[[1]]
+[1] "a!"
+
+[[2]]
+[1] "b!" "c!" "d!" "e!"
+
+[[3]]
+[1] "f!"
+
+[[4]]
+[1] "g!" "h!" "i!"
+'''
+lapply(letterlist,FUN = function(x) paste(x,"!"))
+'''
+[[1]]
+[1] "a !"
+
+[[2]]
+[1] "b !" "c !" "d !" "e !"
+
+[[3]]
+[1] "f !"
+
+[[4]]
+[1] "g !" "h !" "i !"
+'''
+#11.3b
+factorialrecursivefunction <- function(x){
+  if(x==0){
+    return(1)
+  } else {
+    return(x*factorialrecursivefunction(x-1))
+  }
+}
+factorialrecursivefunction(5) #return 120
+factorialrecursivefunction(12) #return 479001600
+factorialrecursivefunction(0) #return 1
+#11.3c
+geometricmeanlist <- function(listofnumbers){
+  geometriccalculation <- function(number){
+    return(prod(number)^(1/length(number)))
+  }
+  for(i in 1:length(listofnumbers)){
+    if(!is.matrix(listofnumbers[[i]])){
+      listofnumbers[[i]] <- geometriccalculation(listofnumbers[[i]])
+    } else {
+      listofnumbers[[i]] <- apply(listofnumbers[[i]],1,geometriccalculation)
+    }
+  }
+  return(listofnumbers)
+}
+foo <- list(1:3,matrix(c(3.3,3.2,2.8,2.1,4.6,4.5,3.1,9.4),4,2),matrix(c(3.3,3.2,2.8,2.1,4.6,4.5,3.1,9.4),2,4))
+geometricmeanlist(foo)
+'''
+[[1]]
+[1] 1.817121
+
+[[2]]
+[1] 3.896152 3.794733 2.946184 4.442972
+
+[[3]]
+[1] 3.388035 4.106080
+'''
+bar <- list(1:9,matrix(1:9,1,9),matrix(1:9,9,1),matrix(1:9,3,3))
+geometricmeanlist(bar)
+'''
+[[1]]
+[1] 4.147166
+
+[[2]]
+[1] 4.147166
+
+[[3]]
+[1] 1 2 3 4 5 6 7 8 9
+
+[[4]]
+[1] 3.036589 4.308869 5.451362
+'''
