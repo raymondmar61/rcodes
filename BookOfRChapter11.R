@@ -305,6 +305,37 @@ matrixmultiplicationfunction2 <- function(inputmatrix,multiplyingmatrix,stringno
     return(result)
   }
 }
+matrixmultiplicationfunction2(listfirsttestfunction,multiplyingmatrix=diag(2))
+'''
+[1] "function output"
+[1]  TRUE FALSE FALSE  TRUE  TRUE
+[1] 1 4 5
+[1] 1
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+[1] 4
+     [,1] [,2] [,3] [,4]
+[1,]    1    3    5    7
+[2,]    2    4    6    8
+[1] 5
+     [,1] [,2]
+[1,]    1    5
+[2,]    2    6
+[3,]    3    7
+[4,]    4    8
+[[1]]
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+[[2]]
+     [,1] [,2]
+[1,]    1    5
+[2,]    2    6
+[3,]    3    7
+[4,]    4    8
+'''
 matrixmultiplicationfunction2(listsecondtestfunction,multiplyingmatrix=diag(2))
 '''
 [1] "function output"
@@ -356,6 +387,37 @@ matrixmultiplicationfunction3 <- function(inputmatrix,multiplyingmatrix,stringno
     return(result)
   }
 }
+matrixmultiplicationfunction3(listfirsttestfunction,diag(2))
+'''
+[1] "function output"
+[1]  TRUE FALSE FALSE  TRUE  TRUE
+[1] 1 4 5
+[1] 1
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+[1] 4
+     [,1] [,2] [,3] [,4]
+[1,]    1    3    5    7
+[2,]    2    4    6    8
+[1] 5
+     [,1] [,2]
+[1,]    1    5
+[2,]    2    6
+[3,]    3    7
+[4,]    4    8
+[[1]]
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+[[2]]
+     [,1] [,2]
+[1,]    1    5
+[2,]    2    6
+[3,]    3    7
+[4,]    4    8
+'''
 matrixmultiplicationfunction3(listsecondtestfunction,diag(2))
 '''
 [1] "function output"
@@ -460,3 +522,172 @@ $cvector
 $dfactor
 [1] "factor"
 '''
+multipleshelperfunctionexternal <- function(inputmatrix,matrix.flags,multiplyingmatrix){
+  indexes <- which(matrix.flags) #which function takes in logical vectors as the argument x and returns the index value corresponding to TRUE entires.  which(x=c(T,F,F,T,T)) #print 1 4 5.
+  print("multipleshelperfunctionexternal output")
+  print(indexes)
+  counter <- 0
+  result <- list()
+  for(i in indexes){
+    temp <- inputmatrix[[i]]
+    if(ncol(temp)==nrow(multiplyingmatrix)){
+      counter <- counter+1
+      result[[counter]] <- temp%*%multiplyingmatrix
+    }
+  }
+  return(list(result, counter))
+}
+matrixmultiplicationfunction4 <- function(inputmatrix,multiplyingmatrix,stringnotamatrix1="No valid matrices",stringnotamatrix2=stringnotamatrix1){
+  matrix.flags <- sapply(inputmatrix,FUN = is.matrix) #vector matrix.flags.  sapply is an implicit looping function.  Apply is.matrix to inputmatarix.  The result is a logical vector of equal length inputmatrix.
+  print("matrixmultiplicationfunction4 output")
+  print(matrix.flags)
+  if(!any(matrix.flags)){
+    return(stringnotamatrix1)
+  }
+  helper.call <- multipleshelperfunctionexternal(inputmatrix,matrix.flags,multiplyingmatrix) #inputmatrix variable has matrices helper.call external helper function is called
+  result <- helper.call[[1]]
+  counter <- helper.call[[2]]
+  if(counter==0){
+    return(stringnotamatrix2)
+  } else {
+    return(result)
+  }
+}
+matrixmultiplicationfunction4(listfirsttestfunction,multiplyingmatrix=diag(2))
+'''
+[1] "matrixmultiplicationfunction4 output"
+[1]  TRUE FALSE FALSE  TRUE  TRUE
+[1] "multipleshelperfunctionexternal output"
+[1] 1 4 5
+[[1]]
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+[[2]]
+     [,1] [,2]
+[1,]    1    5
+[2,]    2    6
+[3,]    3    7
+[4,]    4    8
+'''
+matrixmultiplicationfunction4(listsecondtestfunction,multiplyingmatrix=diag(2))
+'''
+[1] "matrixmultiplicationfunction4 output"
+[1] FALSE FALSE FALSE FALSE
+[1] "No valid matrices"
+'''
+matrixmultiplicationfunction4(listthirdtestfunction,multiplyingmatrix=diag(2))
+'''
+[1] "matrixmultiplicationfunction4 output"
+[1] FALSE FALSE FALSE FALSE  TRUE
+[1] "multipleshelperfunctionexternal output"
+[1] 5
+[1] "No valid matrices"
+'''
+matrixmultiplicationfunction5 <- function(inputmatrix,multiplyingmatrix,stringnotamatrix1="No valid matrices",stringnotamatrix2=stringnotamatrix1){
+  matrix.flags <- sapply(inputmatrix,FUN = is.matrix) #vector matrix.flags.  sapply is an implicit looping function.  Apply is.matrix to inputmatarix.  The result is a logical vector of equal length inputmatrix.
+  print("matrixmultiplicationfunction5 output")
+  print(matrix.flags)
+  if(!any(matrix.flags)){
+    return(stringnotamatrix1)
+  }
+  multipleshelperfunctioninternal <- function(inputmatrix, matrix.flags, multiplyingmatrix){
+    indexes <- which(matrix.flags) #which function takes in logical vectors as the argument x and returns the index value corresponding to TRUE entires.  which(x=c(T,F,F,T,T)) #print 1 4 5.
+    print("multipleshelperfunctioninternal output")
+    print(indexes)
+    counter <- 0
+    result <- list()
+    for(i in indexes){
+      temp <- inputmatrix[[i]]
+      if(ncol(temp)==nrow(multiplyingmatrix)){
+        counter <- counter+1
+        result[[counter]] <-  temp%*%multiplyingmatrix
+      }
+    }
+    return(list(result,counter))
+  }
+  helper.call <- multipleshelperfunctioninternal(inputmatrix,matrix.flags,multiplyingmatrix) #inputmatrix variable has matrices helper.call external helper function is called
+  result <- helper.call[[1]]
+  counter <- helper.call[[2]]
+  if(counter==0){
+    return(stringnotamatrix2)
+  } else {
+    return(result)
+  }
+}
+matrixmultiplicationfunction5(listfirsttestfunction,multiplyingmatrix=diag(2))
+'''
+[1] "matrixmultiplicationfunction5 output"
+[1]  TRUE FALSE FALSE  TRUE  TRUE
+[1] "multipleshelperfunctioninternal output"
+[1] 1 4 5
+[[1]]
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+[[2]]
+     [,1] [,2]
+[1,]    1    5
+[2,]    2    6
+[3,]    3    7
+[4,]    4    8
+'''
+matrixmultiplicationfunction5(listsecondtestfunction,multiplyingmatrix=diag(2))
+'''
+[1] "matrixmultiplicationfunction5 output"
+[1] FALSE FALSE FALSE FALSE
+[1] "No valid matrices"
+'''
+matrixmultiplicationfunction5(listthirdtestfunction,multiplyingmatrix=diag(2))
+'''
+[1] "matrixmultiplicationfunction5 output"
+[1] FALSE FALSE FALSE FALSE  TRUE
+[1] "multipleshelperfunctioninternal output"
+[1] 5
+[1] "No valid matrices"
+'''
+#Simple, one-line task function such as apply().  Disposable or anonymous functions define a function for a single instance without creating a new object.
+repeatmatrixtwice <- matrix(c(2,3,3,4,2,4,7,3,3,6,7,2),3,4)
+repeatmatrixtwice
+'''
+     [,1] [,2] [,3] [,4]
+[1,]    2    4    7    6
+[2,]    3    2    3    7
+[3,]    3    4    3    2
+'''
+apply(repeatmatrixtwice,MARGIN = 2,FUN=function(x){sort(rep(x,2))}) #Use apply like a Python nested for loop.  X is the object to cycle through.  MARGIN is the integer which flags which margin of X to operate on such as rows or columns.  FUN is the function to perform on each MARGIN.  MARGIN index follows the positional order of the dimension for matrices and arrays:  1 is rows, 2 is columns, 3 is layers, 4 is blocks.
+'''
+     [,1] [,2] [,3] [,4]
+[1,]    2    2    3    2
+[2,]    2    2    3    2
+[3,]    3    4    3    6
+[4,]    3    4    3    6
+[5,]    3    4    7    7
+[6,]    3    4    7    7
+'''
+apply(repeatmatrixtwice,MARGIN = 1,FUN=function(x){sort(rep(x,2))}) #Use apply like a Python nested for loop.  X is the object to cycle through.  MARGIN is the integer which flags which margin of X to operate on such as rows or columns.  FUN is the function to perform on each MARGIN.  MARGIN index follows the positional order of the dimension for matrices and arrays:  1 is rows, 2 is columns, 3 is layers, 4 is blocks.
+'''
+     [,1] [,2] [,3]
+[1,]    2    2    2
+[2,]    2    2    2
+[3,]    4    3    3
+[4,]    4    3    3
+[5,]    6    3    3
+[6,]    6    3    3
+[7,]    7    7    4
+[8,]    7    7    4
+'''
+#Recursion is a function calls itself.
+#Find the corresponding nth Fibonacci sequence
+fibonaccirecrusivefunction <- function(n){
+  if(n==1|n==2){
+    return(1)
+  } else {
+    return(fibonaccirecrusivefunction(n-1)+fibonaccirecrusivefunction(n-2))
+  }
+}
+fibonaccirecrusivefunction(5) #return 5
+fibonaccirecrusivefunction(4) #return 3
+fibonaccirecrusivefunction(14) #return 377
