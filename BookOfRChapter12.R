@@ -102,3 +102,61 @@ fibonaccivectortry <- function(vectorofindexes){
 }
 vectornumbers3 <- fibonaccivectortry(vectorofindexes=c(3,2,7,0,9,13))
 vectornumbers3 #print 2   1  13  NA  34 233
+
+sleepcommandfunction <- function(number){
+  result <- 0
+  for(i in 1:number){
+    print(result)
+    cat("Can't use string in print().  Use cat() to separate variables and string with commas,",result)
+    result <- result+1
+    Sys.sleep(0.5)
+  }
+  return(result)
+}
+sleepcommandfunction(8)
+'''
+[1] 0
+Can\'t use string in print().  Use cat() to separate variables and string with commas, 0
+[1] 1
+Can\'t use string in print().  Use cat() to separate variables and string with commas, 1
+[1] 2
+Can\'t use string in print().  Use cat() to separate variables and string with commas, 2
+[1] 3
+Can\'t use string in print().  Use cat() to separate variables and string with commas, 3
+[1] 4
+Can\'t use string in print().  Use cat() to separate variables and string with commas, 4
+[1] 5
+Can\'t use string in print().  Use cat() to separate variables and string with commas, 5
+[1] 6
+Can\'t use string in print().  Use cat() to separate variables and string with commas, 6
+[1] 7
+Can\'t use string in print().  Use cat() to separate variables and string with commas, 7
+[1] 8
+'''
+textprogressbar <- function(number){
+  result <- 0
+  progressbarvariable <- txtProgressBar(min=0,max=number,style=1,char="=") #min and max are numeric values define the limits of the bar.  Style is an 1, 2, or 3.  Style 3 shows percentage completed.  Char is a single character string what is the progress bar appearance.
+  print(result)
+  for(i in 1:number){
+    result <- result+1
+    Sys.sleep(0.5)
+    setTxtProgressBar(progressbarvariable,value=i) #Progress the bar with the bar object to update bar progressbarvariable variable and the value it should update value=i.  When progress bar is completed after exiting the loop, the progress bar must be terminated with close() close(progressbarvariable).
+  }
+  close(progressbarvariable)
+  return(result)
+}
+textprogressbar(8)
+'''
+[1] 0
+=====================================================================================
+[1] 8
+'''
+Sys.time() #print "2022-04-16 16:19:12 PDT"
+timestart <- Sys.time()
+timeend <- Sys.time()
+timeend-timestart #print Time difference of 0.0001838207 secs
+proc.time() #return total elapsed wall clock time and computer-related CPU timings
+'''
+    user   system  elapsed 
+   9.325    1.603 1970.502 
+'''
