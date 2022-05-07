@@ -144,3 +144,47 @@ percentagesoffeedrounded
 '''
 percent <- round(mean(chickwts$feed=="soybean")*100,1)
 percent #print 19.7
+quantile8thor80thpercentile <- c(2,4.4,3,3,2,2.2,2,4)
+quantile(quantile8thor80thpercentile,prob=0.8) #return 80%\n 3.6
+quantiledata <- c(2,4.4,3,3,2,2.2,2,4)
+quarterspercentiles <- quantile(quantiledata,prob=c(0,.25,.50,.75,1))
+quarterspercentiles
+'''
+  0%  25%  50%  75% 100% 
+2.00 2.00 2.60 3.25 4.40 
+'''
+summary(quantiledata)
+'''
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  2.000   2.000   2.600   2.825   3.250   4.400 
+'''
+quantile(chickwts$weight,prob=c(.25,.75))
+'''
+  25%   75% 
+204.5 323.5 
+'''
+summary(quakes$mag[quakes$depth<400])  #depth must be less than 400km in quakes dataset
+'''
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.00    4.40    4.60    4.67    4.90    6.40 
+'''
+quantiledatax <- c(2,4.4,3,3,2,2.2,2,4)
+quantiledatay <- c(1,4.4,1,3,2,2.2,2,7)
+mean(quantiledatax) #print 2.825
+mean(quantiledatay) #print 2.825
+#plot quantiledatax and quantiledatay on horizontal lines
+plot(quantiledatax,type="n",xlab="xlabel",ylab="ylabel data vector",yaxt="n",bty="n")
+abline(h=c(3,4),lty=2,col="gray")
+abline(v=mean(quantiledatax),lwd=2,lty=3)
+text(c(0.8,2),c(3,4),labels=c("x","ytextlabel")) #labels for the horizontal lines abline(h=c(3,4),lty=2,col="gray") for which the c(0.8,2) is the starting point to print the label on the horizontal lines
+points(jitter(c(quantiledatax,quantiledatay)),c(rep(3,length(quantiledatax)),rep(4,length(quantiledatay)))) #plot points on horizontal lines
+var(quantiledatax) #print 0.9078571
+sd(quantiledatax) #print 0.9528154
+IQR(quantiledatax) #print 1.25 #IQR is interquartile range
+IQRformula <- as.numeric(quantile(quantiledatax,0.75)-quantile(quantiledatax,0.25))
+IQRformula #print 1.25
+var(quantiledatay) #print 4.050714
+sd(quantiledatay) #print 2.012639
+IQR(quantiledatay) #print 1.6 #IQR is interquartile range
+IQRformula <- as.numeric(quantile(quantiledatay,0.75)-quantile(quantiledatay,0.25))
+IQRformula #print 1.6

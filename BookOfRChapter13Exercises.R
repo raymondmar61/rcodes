@@ -120,3 +120,58 @@ tapply(InsectSprays$count,INDEX=InsectSprays$spray,FUN=function(x) round(mean(x>
   A   B   C   D   E   F 
 100 100   8  58  33 100 
 '''
+
+#Exercise 13.3
+#13.3a 10th, 30th, and 90th percentiles of chick weights and use tapply to determine which feed type is associated with the highest sample variance of weights.
+threepercentiles <- quantile(chickwts$weight,prob=c(.1,.3,.9))
+threepercentiles
+'''
+10% 30% 90% 
+153 217 359 
+'''
+chickvariance <- tapply(chickwts$weight,INDEX=chickwts$feed,FUN=var)
+chickvariance
+'''
+   casein horsebean   linseed  meatmeal   soybean sunflower 
+ 4151.720  1491.956  2728.568  4212.091  2929.956  2384.992 
+'''
+chickvariance[chickvariance==max(chickvariance)]
+'''
+meatmeal 
+4212.091 
+'''
+#13.3b
+#i Find the IQR of the recorded depths
+quakesdepthsiqr <- IQR(quakes$depth)
+quakesdepthsiqr #print 444
+#ii Find the five-number summary or quantiles all magnitudes at depths 400km or deeper
+fivenumbersummary <- summary(quakes$mag[quakes$depth>400])
+fivenumbersummary
+'''
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  4.000   4.200   4.500   4.545   4.700   5.900 
+'''
+#iii Use cut from section 4.3.3 to create a factor vector four evenly spaced categories of quakes$depth
+dmin <- min(quakes$depth)
+dmin #print 40
+dmax <- max(quakes$depth)
+dmax #print 680
+depthcat <- cut(quakes$depth,breaks=seq(dmin,dmax,length=5),include.lowest=TRUE,right=FALSE)
+levels(depthcat) #print "[40,200)"  "[200,360)" "[360,520)" "[520,680]"
+#iv Sample mean and standard deviation of the magnitudes associated with each category of depth from depthcat
+tapply(quakes$mag,INDEX=depthcat,FUN=mean)
+'''
+ [40,200) [200,360) [360,520) [520,680] 
+ 4.735492  4.552201  4.500000  4.546488 
+'''
+tapply(quakes$mag,INDEX=depthcat,FUN=sd)
+'''
+ [40,200) [200,360) [360,520) [520,680] 
+0.4042286 0.3788451 0.3612255 0.3908510 
+'''
+#v Use tapply to compute the .8th quantile [or 80 percentile] of the magnitudes of the seismic events in quakes, split by depthcat
+tapply(quakes$mag,INDEX=depthcat,FUN=quantile,prob=0.8)
+'''
+ [40,200) [200,360) [360,520) [520,680] 
+      5.1       4.8       4.8       4.9 
+'''
