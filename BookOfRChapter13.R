@@ -188,3 +188,29 @@ sd(quantiledatay) #print 2.012639
 IQR(quantiledatay) #print 1.6 #IQR is interquartile range
 IQRformula <- as.numeric(quantile(quantiledatay,0.75)-quantile(quantiledatay,0.25))
 IQRformula #print 1.6
+
+covariancecorrelationx <- c(2,4.4,3,3,2,2.2,2,4)
+covariancecorrelationy <- c(1,4.4,1,3,2,2.2,2,7)
+covariancefunction <- cov(covariancecorrelationx,covariancecorrelationy)
+covariancefunction #print 1.479286
+correlationmath <- cov(covariancecorrelationx,covariancecorrelationy)/(sd(covariancecorrelationx)*sd(covariancecorrelationy))
+correlationmath #print 0.7713962
+correlationfunction <- cor(covariancecorrelationx,covariancecorrelationy) #R uses the Pearson's correlation coefficient which is the default
+correlationfunction #print 0.7713962
+#Quakes data plotting the magnitude mag and number of stations reporting detection stations
+plot(quakes$mag, quakes$stations,xlab="xlabelMagnitude",ylab="ylabelNumberOfStations")
+cov(quakes$mag,quakes$stations) #print 7.508181
+cor(quakes$mag,quakes$stations) #print 0.8511824
+rep(0,10) #print zero's ten times 0 0 0 0 0 0 0 0 0 0
+outliersdata <- c(0.6,-0.6,0.1,-0.2,-1.0,0.4,0.3,-1.8,1.1,6.0)
+mean(outliersdata) #print 0.49
+mean(outliersdata[0:9]) #print -0.1222222  #RM:  removed the 6.0 outlier
+plot(outliersdata,rep(0,10),yaxt="n",ylab="ylabel",bty="n",cex=2,cex.axis=1.5,cex.lab=1.5) #Plot a horizontal line with the outliers data from -2 to 6.  cex is diameter of circle, cex.axis is size of horizontal number label, cex.lab is size of the xaxis label and yaxis label
+abline(h=0,col="gray",lty=2) #Plot a horizontal line through the circles.
+bivariatexvalues <- c(0.1,0.3,1.3,0.6,0.2,-1.7,0.8,0.9,-0.8,-1.0)
+bivariateyvalues <- c(-0.3,0.9,2.8,2.3,1.2,-4.1,-0.4,4.1,-2.3,-100.0)
+correlationwithoutlier <- cor(bivariatexvalues,bivariateyvalues)
+correlationwithoutlier #print 0.4566361
+correlationwithoutoutlier <- cor(bivariatexvalues[0:9],bivariateyvalues[-10])
+correlationwithoutoutlier #print 0.8898639  #RM:  removed the x=-1.0 and y=-100.0 outlier
+plot(bivariatexvalues,bivariateyvalues,axes=T,cex=2,cex.axis=1.5,cex.lab=1.5) #the outlier is at (x=-1,y=-100) in the x-y plot chart

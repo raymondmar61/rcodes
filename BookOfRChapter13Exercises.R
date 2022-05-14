@@ -175,3 +175,52 @@ tapply(quakes$mag,INDEX=depthcat,FUN=quantile,prob=0.8)
  [40,200) [200,360) [360,520) [520,680] 
       5.1       4.8       4.8       4.9 
 '''
+
+#Exercise 13.4
+#13.4a Compute the correlation coefficient from Exercise 7.1b
+weight <- c(55,85,75,42,93,63,58,75,89,67)
+height <- c(161,185,174,154,188,178,170,167,181,178)
+cor(weight,height) #print 0.8621007
+#13.4b Use the data set mtcars which is 32 automobiles and their performance data
+mtcars
+'''
+mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+...
+'''
+?mtcars #Help tab with description. Motor Trend Car Road Tests is the title.
+plot(mtcars$hp,mtcars$qsec,xlab="xlabelhorsepower",ylab="ylabel1/4miletime")
+cor(mtcars$hp,mtcars$qsec) #print -0.7082234
+transmissionfactor <- factor(mtcars$am,labels=c("auto transmission","manual transmission"))
+transmissionfactor
+'''
+1] manual transmission manual transmission manual transmission auto transmission  
+ [5] auto transmission   auto transmission   auto transmission   auto transmission  
+ [9] auto transmission   auto transmission   auto transmission   auto transmission  
+[13] auto transmission   auto transmission   auto transmission   auto transmission  
+[17] auto transmission   manual transmission manual transmission manual transmission
+[21] auto transmission   auto transmission   auto transmission   auto transmission  
+[25] auto transmission   manual transmission manual transmission manual transmission
+[29] manual transmission manual transmission manual transmission manual transmission
+Levels: auto transmission manual transmission
+'''
+library(ggplot2)
+qplot(mtcars$hp,mtcars$qsec,col=transmissionfactor,xlab="horsepower",ylab="1/4 mile time")
+hpqseccorrelationmanual <- cor(mtcars$hp[transmissionfactor=="manual transmission"],mtcars$qsec[transmissionfactor=="manual transmission"])
+hpqseccorrelationmanual #print -0.8494566
+hpqseccorrelationautomatic <- cor(mtcars$hp[transmissionfactor=="auto transmission"],mtcars$qsec[transmissionfactor=="auto transmission"])
+hpqseccorrelationautomatic #print -0.8040275
+#13.4c Use the data set chickwtz
+#i Plot the weight of chicks on the sunflower diet
+weightchickssunflowerdiet <- chickwts$weight[chickwts$feed=="sunflower"]
+plot(weightchickssunflowerdiet,rep(0,length(weightchickssunflowerdiet)),yaxt="n",bty="n",xlab="xlabelSunflowerChickWeights",ylab="ylabel")
+#ii Calculate the standard deviation and IQR of weight of chicks on the sunflower diet
+sd(weightchickssunflowerdiet) #print 48.83638
+IQR(weightchickssunflowerdiet) #print 27.5
+#iii Recalculate the standard deviation and IQR removing the lowest weight being the outlier
+sd(weightchickssunflowerdiet[-which(weightchickssunflowerdiet==min(weightchickssunflowerdiet))]) #print 38.31473
+IQR(weightchickssunflowerdiet[-which(weightchickssunflowerdiet==min(weightchickssunflowerdiet))]) #print 21.5
