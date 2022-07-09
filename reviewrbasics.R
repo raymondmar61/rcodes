@@ -9,17 +9,28 @@ logicalT <- T
 logicalFALSE <- FALSE
 escapecharacter <- "my little\" story backslash"
 escapecharacter #print "my little\" story backslash"
+(surroundparenthsis <- c("in an assignment operator","automatically shows results in console")) #print "in an assignment operator"              "automatically shows results in console"
+(doubledatatype5 <- 5) #print 5
+typeof(doubledatatype5) #print double
+(integerdatatype5 <- as.integer(5)) #print 5
+typeof(integerdatatype5) #print integer
+(characternumber <- c("1","2","3")) #print 
+typeof(characternumber) #print character "1" "2" "3"
+(doublecharacternumber <- as.numeric(c("1","2","3"))) #print 1 2 3
+typeof(doublecharacternumber) #print double
 '''
-Vector is the basic group data; use the concatenate function c to create a vector; e.g., vectorvariable <- c(1,2,3).
-List is created using the list function group vectors in one list; e.g.,  listvariable <- list(vector1, vector2, vector3).
-Data frame is like an Excel table; e.g., dataframethreecolumns <- data.frame(dataframecolumnone,dataframecolumntwo,dataframecolumnthree).
-Matrix is a table with rows and columns without names from a vector.  matrixfunctiontworowsthreecolumns <- matrix(vectorformatrix,2,3).
+Vector is the basic group data; use the concatenate function c to create a vector; e.g., vectorvariable <- c(1,2,3).  Vector is one or more numbers in a one dimensional array.  Same data type such as all character or all integer.  R\'s basic data object.
+List is created using the list function group vectors in one list; e.g.,  listvariable <- list(vector1, vector2, vector3).  Most flexible.  An ordered collection of elements of any data type, length, or structure.  Can be difficult.
+Data frame is like an Excel table; e.g., dataframethreecolumns <- data.frame(dataframecolumnone,dataframecolumntwo,dataframecolumnthree).  Most common.  Vectors of multiple data types one vector character, one vector integer, one vector logical or boolean.  Same length.
+Matrix is a table with rows and columns without names from a vector--named by index numbers.  Two dimensional data.  Same length.  Same data class.  matrixfunctiontworowsthreecolumns <- matrix(vectorformatrix,2,3).
+Array is a matrix with three or more dimensions.
 '''
 vectorfunction <- c(1,2,23,0.2)
 vectorfunction #print 1.0  2.0 23.0  0.2
+is.vector(vectorfunction) #print TRUE
 vectorcisconcatenate <- c(T,F,FALSE,TRUE,F)
 vectorcisconcatenate #print TRUE FALSE FALSE  TRUE FALSE
-vectorstrings <- c("a","b","b","my little story","z","20","number 20 as string")
+vectorstrings <- c("a","b","b","my little story","z","20","number 20 as string") #RM:  R refers strings as characters
 vectorstrings
 '''
 [1] "a"                   "b"                   "b"                   "my little story"     "z"                  
@@ -42,6 +53,10 @@ notlastvalueonly #prints all values starting at the second index number
 [1] "b"                   "b"                   "my little story"     "z"                   "20"                 
 [6] "number 20 as string"
 '''
+#Coercion to change data type a vector with multiple data types to least restrictive type
+integercharacterboolean <- c(1,"b",TRUE)
+integercharacterboolean #print "1"    "b"    "TRUE"
+typeof(integercharacterboolean) #print character
 makealistlistfunction <- list(vectorstrings, vectorlogicalnumeric,vectorconvertalltostring)
 makealistlistfunction
 '''
@@ -124,6 +139,9 @@ dataframecolumnnames[[2]] #print "a" "b" "c"
 typeof(dataframecolumnnames[[2]]) #print character
 dataframecolumnnames[[2]][3] #print "c"
 dataframecolumnnames[[2]][1:2] #print "a" "b"
+dataframecolumnnames[1,3] #print TRUE
+dataframecolumnnames[3,1] #print 3
+dataframecolumnnames[2,3] #print FALSE
 extractfirstrowfromdataframe <- dataframecolumnnames[1,]
 extractfirstrowfromdataframe
 '''
@@ -142,13 +160,136 @@ extractfirstrowthirdrowfromdataframe
 '''
 View(dataframecolumnnames) #Opens a tab dataframecolumnnames to view the data frame like an Excel spreadsheet
 colnames(dataframecolumnnames) #print "column1" "column2" "column3".  Instructor says NULL is returned if column names are RStudio default column names.  Matrix doesn't have column names.
+dataframecoercion <- cbind(data.frame(dataframecolumnone,dataframecolumntwo,dataframecolumnthree)) #columnbind cbind changes the data types to its most general data type.  dataframecoercion data type should be all character.
+dataframecoercion
+'''
+dataframecolumnone dataframecolumntwo dataframecolumnthree
+1                  1                  a                 TRUE
+2                  2                  b                FALSE
+3                  3                  c                 TRUE
+'''
+dataframecoercionasdataframe <- as.data.frame(cbind(data.frame(dataframecolumnone,dataframecolumntwo,dataframecolumnthree))) #as data frame recognizes the data types as its original data type integer, character, and boolean.
+dataframecoercionasdataframe
+'''
+dataframecolumnone dataframecolumntwo dataframecolumnthree
+1                  1                  a                 TRUE
+2                  2                  b                FALSE
+3                  3                  c                 TRUE
+'''
 vectorformatrix <- c("one","two","three","little big","top","555")
-matrixfunctiontworowsthreecolumns <- matrix(vectorformatrix,2,3)
-matrixfunctiontworowsthreecolumns
+matrixfunetiontworowsthreecolumns <- matrix(vectorformatrix,2,3)
+matrixfunetiontworowsthreecolumns
 '''
      [,1]  [,2]         [,3] 
 [1,] "one" "three"      "top"
 [2,] "two" "little big" "555"
 '''
+matrixfunctiontworowsautocolumns <- matrix(vectorformatrix, nrow=2)
+matrixfunctiontworowsautocolumns
+'''
+     [,1]  [,2]         [,3] 
+[1,] "one" "three"      "top"
+[2,] "two" "little big" "555"
+'''
+matrixfunctiontworowsautocolumnsbyrows <- matrix(vectorformatrix, nrow=2, byrow=TRUE)
+matrixfunctiontworowsautocolumnsbyrows
+'''
+     [,1]         [,2]  [,3]   
+[1,] "one"        "two" "three"
+[2,] "little big" "top" "555" 
+'''
 View(matrixfunctiontworowsthreecolumns) #Opens a tab matrixfunctiontworowsthreecolumns to view the matrix like an Excel spreadsheet.  Can click on the button at Environment tab top right to view the matrix like an Excel spreadsheet.
 colnames(matrixfunctiontworowsthreecolumns) #print NULL.  Matrix doesn't have column names.
+matrixfunetiontworowsthreecolumns[2,] #print "two"        "little big" "555"
+matrixfunetiontworowsthreecolumns[,1] #print "one" "two"
+matrixfunetiontworowsthreecolumns[2,3] #print "555"
+matrixfunetiontworowsthreecolumns[,2:3]
+'''
+     [,1]         [,2] 
+[1,] "three"      "top"
+[2,] "little big" "555"
+'''
+#Convert matrix to data frame
+(numbers12matrix <- matrix(1:12,nrow=3))
+'''
+[,1] [,2] [,3] [,4]
+[1,]    1    4    7   10
+[2,]    2    5    8   11
+[3,]    3    6    9   12
+'''
+is.matrix(numbers12matrix) #print TRUE
+is.data.frame(numbers12matrix) #print FALSE
+(numbers12matrixtodataframe <- as.data.frame(numbers12matrix))
+'''
+  V1 V2 V3 V4
+1  1  4  7 10
+2  2  5  8 11
+3  3  6  9 12
+'''
+is.matrix(numbers12matrixtodataframe) #print FALSE
+is.data.frame(numbers12matrixtodataframe) #print TRUE
+arraytwotables <- array(c(1:24),c(4,3,2)) #c(4,3,2) is (rows, columns, tables) four rows, three columns, two tables
+arraytwotables
+'''
+, , 1
+
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,]   13   17   21
+[2,]   14   18   22
+[3,]   15   19   23
+[4,]   16   20   24
+'''
+definefunctiondivision <- function(value1, value2){
+  results <- value1/value2
+  return(results)
+}
+definefunctiondivision(10,20) #print 0.5
+definefunctiondivision(value2=10,value1=20) #print 2
+definefunctiondivision #prints the function code
+'''
+function(value1, value2){
+  results <- value1/value2
+  return(results)
+}
+<bytecode: 0x564303c6cc20>
+'''
+#R built-in function help function
+?mean() #Bottom right pane Help tab displays mean() function description
+#Install packages.  Instructors says best type code on Console
+'''
+install.packages("ggplot2")
+'''
+require(ggplot2) #load package ggplot2 with a confirmation message Loading required package: ggplot2
+library(ggplot2) #load package ggplot2 or activate ggplot2 which is check the checkbox ggplot2 in Packages tab bottom right
+dataframecolumnnames
+'''
+  column1 column2 column3
+1       1       a    TRUE
+2       2       b   FALSE
+3       3       c    TRUE
+'''
+ggplot(dataframecolumnnames,aes(column1,column3))+geom_point() #plot a scatterplot column1 x-axis and column3 y-axis (1,TRUE), (2,FALSE), (3,TRUE)
+ggplot(dataframecolumnnames,aes(column1,column3)) #plot a chart column1 x-axis and column3 y-axis without the plots
+dev.off() #clear plot
+ggplot2::geom_point #print code at Console bottom left
+'''
+function (mapping = NULL, data = NULL, stat = "identity", position = "identity", 
+    ..., na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) 
+{
+    layer(data = data, mapping = mapping, stat = stat, geom = GeomPoint, 
+        position = position, show.legend = show.legend, inherit.aes = inherit.aes, 
+        params = list(na.rm = na.rm, ...))
+}
+<bytecode: 0x564308b49c10>
+<environment: namespace:ggplot2>
+'''
+detach("package:ggplot2",unload=TRUE) #unload package ggplot2 or deactivate ggplot2
+cat("\014")  #Clear console or Ctrl+L for which you must press Ctrl+1 to focus back to source
