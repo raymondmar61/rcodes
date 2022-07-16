@@ -3,13 +3,27 @@
 2+10 #Practice Code-->Re-Run Previous Alt+Ctrl+P.   Code-->Run Region-->Run From Beginning To Line Alt+Ctrl+B. Code-->Run Region-->Run From Line to End Alt+Ctrl+E. Code-->Run Region-->Run All Alt+Ctrl+R.
 savetovariable = 1+2
 savetovariable #print 3
-assignmentoperator <- "Press Alt+- for shortcut key"
+assignmentoperator <- "Press Alt+- for shortcut key.  Assign values to a variable."
 assignmentoperator #print Press Alt+- for shortcut key
 logicalT <- T
 logicalFALSE <- FALSE
 escapecharacter <- "my little\" story backslash"
 escapecharacter #print "my little\" story backslash"
-(surroundparenthsis <- c("in an assignment operator","automatically shows results in console")) #print "in an assignment operator"              "automatically shows results in console"
+colonoperatorascending <- 0:10 #assigns numbers 0 to 10 inclusive to colonoperatorascending
+colonoperatorascending #print 0  1  2  3  4  5  6  7  8  9 10
+colonoperatordescending <- 10:0
+colonoperatordescending #print 10  9  8  7  6  5  4  3  2  1  0
+sequencestartsone <- seq(10)
+sequencestartsone #print 1  2  3  4  5  6  7  8  9 10
+sequencespecifics <- seq(30,0,by=-3) #start at 30, end at 0 going down by threes
+sequencespecifics #print 30 27 24 21 18 15 12  9  6  3  0
+repeatfivetimes <- rep(TRUE,5) #rep is called Replicate
+repeatfivetimes #print TRUE TRUE TRUE TRUE TRUE
+repeatsetcollate <- rep(c(TRUE,FALSE),5)
+repeatsetcollate #print TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE
+repeatsetnocollate <- rep(c(TRUE,FALSE),each=5)
+repeatsetnocollate #print TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+# (surroundparenthesis <- c("in an assignment operator","automatically shows results in console")) #print "in an assignment operator"              "automatically shows results in console"
 (doubledatatype5 <- 5) #print 5
 typeof(doubledatatype5) #print double
 (integerdatatype5 <- as.integer(5)) #print 5
@@ -267,29 +281,3 @@ function(value1, value2){
 '''
 install.packages("ggplot2")
 '''
-require(ggplot2) #load package ggplot2 with a confirmation message Loading required package: ggplot2
-library(ggplot2) #load package ggplot2 or activate ggplot2 which is check the checkbox ggplot2 in Packages tab bottom right
-dataframecolumnnames
-'''
-  column1 column2 column3
-1       1       a    TRUE
-2       2       b   FALSE
-3       3       c    TRUE
-'''
-ggplot(dataframecolumnnames,aes(column1,column3))+geom_point() #plot a scatterplot column1 x-axis and column3 y-axis (1,TRUE), (2,FALSE), (3,TRUE)
-ggplot(dataframecolumnnames,aes(column1,column3)) #plot a chart column1 x-axis and column3 y-axis without the plots
-dev.off() #clear plot
-ggplot2::geom_point #print code at Console bottom left
-'''
-function (mapping = NULL, data = NULL, stat = "identity", position = "identity", 
-    ..., na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) 
-{
-    layer(data = data, mapping = mapping, stat = stat, geom = GeomPoint, 
-        position = position, show.legend = show.legend, inherit.aes = inherit.aes, 
-        params = list(na.rm = na.rm, ...))
-}
-<bytecode: 0x564308b49c10>
-<environment: namespace:ggplot2>
-'''
-detach("package:ggplot2",unload=TRUE) #unload package ggplot2 or deactivate ggplot2
-cat("\014")  #Clear console or Ctrl+L for which you must press Ctrl+1 to focus back to source
