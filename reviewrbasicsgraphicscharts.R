@@ -141,3 +141,43 @@ hist(iris$Petal.Width [iris$Species=="virginica"],xlim=c(0,3), breaks=9, main="C
 par(mfrow=c(1,1)) #par is parameter.  Default graphical parameter.  Put the graph 1 row, 1 column.
 detach("package:datasets",unload=TRUE) #clear packages or uncheck packages in Packages tab System Library
 cat("\014")  #Clear console or Ctrl+L for which you must press Ctrl+1 to focus back to source
+
+#Scatterplots
+library(datasets)
+?mtcars #Help on mtcars Motor Trend Car Road Tests.  The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
+head(mtcars)
+'''
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+'''
+#Take a look at a variable or column in the mtcars dataset
+hist(mtcars$wt) #histogram of the weights wt of each car in 1000 lbs
+hist(mtcars$mpg) #histogram of the miles per gallon mpg of each car
+#Scatterplot the weight of each car and its miles per gallon
+plot(mtcars$wt,mtcars$mpg)  #scatter plot correlation inverse heavier the car the lower the miles per gallon
+#Add scatterplot options
+plot(mtcars$wt,mtcars$mpg, pch=19, cex=1.5, col="#cc0000",main="Title Chart solid circle 150% larger red MPG As A Function Of Weight Of Cars",xlab="X-label Weight (in 1000 pounds)",ylab="Y-label MPG")
+detach("package:datasets",unload=TRUE) #clear packages or uncheck packages in Packages tab System Library
+cat("\014")  #Clear console or Ctrl+L for which you must press Ctrl+1 to focus back to source
+
+#Overlay plots or two charts together
+library(datasets)
+?lynx #Annual Canadian Lynx trappings 1821-1934
+head(lynx) #print 269  321  585  871 1475 2821.  It's a time series.  One line of numbers start at year 1821.
+hist(lynx)
+hist(lynx,breaks=14,freq=FALSE,col="thistle1",main=paste("Paste() function Long title display in one line Annual Canadian Lynx Trappings 1821-1934 with 14 bins, axis shows density which are proportions and not frequency",xlab="Number Of Lynx Trapped"))
+#Normal distribution
+curve(dnorm(x,mean=mean(lynx),sd=sd(lynx)),col="thistle4",lwd=2,add=TRUE) #add=TRUE superimpose the normal distribution chart on the previous graph which is the hist(lynx . . .)
+#Add two kernel density estimators to the hist(lynx . . . ) and curve(dnorm(. . . ) chart
+lines(density(lynx),col="blue",lwd=2)
+lines(density(lynx,adjust=3),col="purple",lwd=2)
+#Rug plot.  The rug plot is marks the individual observations above the x-axis.  Rug plot added to the hist(lynx . . . ) and curve(dnorm(. . . ) chart with the two lines(density . . .)
+rug(lynx,lwd=2,co="gray")
+detach("package:datasets",unload=TRUE) #clear packages or uncheck packages in Packages tab System Library
+cat("\014")  #Clear console or Ctrl+L for which you must press Ctrl+1 to focus back to source
+
