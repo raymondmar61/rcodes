@@ -9,6 +9,21 @@ logicalT <- T
 logicalFALSE <- FALSE
 escapecharacter <- "my little\" story backslash"
 escapecharacter #print "my little\" story backslash"
+numberdefaultdoubleprecision <- 15
+numberdefaultdoubleprecision #print 15
+typeof(numberdefaultdoubleprecision) #print double
+numberdefaultdoubleprecisiondecimal <- 1.5
+numberdefaultdoubleprecisiondecimal #print 1.5
+typeof(numberdefaultdoubleprecisiondecimal) #print double
+charactersingleletter <- "c"
+charactersingleletter #print c
+typeof(charactersingleletter) #print character
+charactermultipleletters <- "a string of text"
+charactermultipleletters #print a string of text
+typeof(charactermultipleletters) #print character
+logicalTRUE <- TRUE
+logicalTRUE #print TRUE
+typeof(logicalTRUE) #print logical
 colonoperatorascending <- 0:10 #assigns numbers 0 to 10 inclusive to colonoperatorascending
 colonoperatorascending #print 0  1  2  3  4  5  6  7  8  9 10
 colonoperatordescending <- 10:0
@@ -23,20 +38,11 @@ repeatsetcollate <- rep(c(TRUE,FALSE),5)
 repeatsetcollate #print TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE
 repeatsetnocollate <- rep(c(TRUE,FALSE),each=5)
 repeatsetnocollate #print TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
-# (surroundparenthesis <- c("in an assignment operator","automatically shows results in console")) #print "in an assignment operator"              "automatically shows results in console"
-(doubledatatype5 <- 5) #print 5
-typeof(doubledatatype5) #print double
-(integerdatatype5 <- as.integer(5)) #print 5
-typeof(integerdatatype5) #print integer
-(characternumber <- c("1","2","3")) #print 
-typeof(characternumber) #print character "1" "2" "3"
-(doublecharacternumber <- as.numeric(c("1","2","3"))) #print 1 2 3
-typeof(doublecharacternumber) #print double
 '''
-Vector is the basic group data; use the concatenate function c to create a vector; e.g., vectorvariable <- c(1,2,3).  Vector is one or more numbers in a one dimensional array.  Same data type such as all character or all integer.  R\'s basic data object.
+Vector is the basic group data; use the concatenate function c to create a vector; e.g., vectorvariable <- c(1,2,3).  Vector is one or more numbers in a one dimensional array.  The numbers are in a straight line.  Same data type such as all character or all integer.  A vector with a single number is a scalar; however, in R, it\'s a vector.  R\'s basic data object.
 List is created using the list function group vectors in one list; e.g.,  listvariable <- list(vector1, vector2, vector3).  Most flexible.  An ordered collection of elements of any data type, length, or structure.  Can be difficult.
-Data frame is like an Excel table; e.g., dataframethreecolumns <- data.frame(dataframecolumnone,dataframecolumntwo,dataframecolumnthree).  Most common.  Vectors of multiple data types one vector character, one vector integer, one vector logical or boolean.  Same length.
-Matrix is a table with rows and columns without names from a vector--named by index numbers.  Two dimensional data.  Same length.  Same data class.  matrixfunctiontworowsthreecolumns <- matrix(vectorformatrix,2,3).
+Data frame is like an Excel table spreadsheet; e.g., dataframethreecolumns <- data.frame(dataframecolumnone,dataframecolumntwo,dataframecolumnthree).  Most common.  Vectors of multiple data types one vector character, one vector integer, one vector logical or boolean are valid.  Same length.
+Matrix is a table with rows and columns without names from a vector.  The columns are named by index numbers.  Two dimensional data.  Same length.  Same data class.  matrixfunctiontworowsthreecolumns <- matrix(vectorformatrix,2,3).
 Array is a matrix with three or more dimensions.
 '''
 vectorfunction <- c(1,2,23,0.2)
@@ -67,10 +73,19 @@ notlastvalueonly #prints all values starting at the second index number
 [1] "b"                   "b"                   "my little story"     "z"                   "20"                 
 [6] "number 20 as string"
 '''
-#Coercion to change data type a vector with multiple data types to least restrictive type
-integercharacterboolean <- c(1,"b",TRUE)
-integercharacterboolean #print "1"    "b"    "TRUE"
-typeof(integercharacterboolean) #print character
+#Coercion to change a data object from one type to another.  For example, change a character to logical, matrix to a data frame, and double to integer.  Coercion changes data type a vector with multiple data types to least restrictive type.  R can coerce automatically which converts multiple data types to the lease restrictive data type.
+integercharacterbooleanautomaticcoercion <- c(1,"b",TRUE)
+integercharacterbooleanautomaticcoercion #print "1"    "b"    "TRUE"
+typeof(integercharacterbooleanautomaticcoercion) #print character
+# (surroundparenthesis <- c("in an assignment operator","automatically shows results in console")) #print "in an assignment operator"              "automatically shows results in console"
+(doubledatatype5 <- 5) #print 5
+typeof(doubledatatype5) #print double
+(integerdatatype5 <- as.integer(5)) #print 5
+typeof(integerdatatype5) #print integer
+(charactertonumber <- c("1","2","3")) #print "1" "2" "3"
+typeof(charactertonumber) #print character
+(doublecharacternumber <- as.numeric(c("1","2","3"))) #print 1 2 3
+typeof(doublecharacternumber) #print double
 makealistlistfunction <- list(vectorstrings, vectorlogicalnumeric,vectorconvertalltostring)
 makealistlistfunction
 '''
@@ -114,6 +129,22 @@ dataframecolumnone <- c(1,2,3)
 dataframecolumntwo <- c("a","b","c")
 dataframecolumnthree <- c(T,F,TRUE)
 data.frame(dataframecolumnone,dataframecolumntwo,dataframecolumnthree)
+'''
+  dataframecolumnone dataframecolumntwo dataframecolumnthree
+1                  1                  a                 TRUE
+2                  2                  b                FALSE
+3                  3                  c                 TRUE
+'''
+dataframecbindonedatatype <- cbind(dataframecolumnone,dataframecolumntwo,dataframecolumnthree)
+dataframecbindonedatatype
+'''
+     dataframecolumnone dataframecolumntwo dataframecolumnthree
+[1,] "1"                "a"                "TRUE"              
+[2,] "2"                "b"                "FALSE"             
+[3,] "3"                "c"                "TRUE" 
+'''
+dataframecbindasdataframedifferentdatatype <- as.data.frame(cbind(dataframecolumnone,dataframecolumntwo,dataframecolumnthree))
+dataframecbindasdataframedifferentdatatype
 '''
   dataframecolumnone dataframecolumntwo dataframecolumnthree
 1                  1                  a                 TRUE
@@ -223,7 +254,7 @@ matrixfunetiontworowsthreecolumns[,2:3]
 [1,] "three"      "top"
 [2,] "little big" "555"
 '''
-#Convert matrix to data frame
+#Convert matrix to data frame.  Coerce matrix to data frame.
 (numbers12matrix <- matrix(1:12,nrow=3))
 '''
 [,1] [,2] [,3] [,4]
@@ -281,3 +312,5 @@ function(value1, value2){
 '''
 install.packages("ggplot2")
 '''
+#Clear Environment tab
+rm(list=ls())
