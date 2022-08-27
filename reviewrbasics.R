@@ -3,8 +3,8 @@
 2+10 #Practice Code-->Re-Run Previous Alt+Ctrl+P.   Code-->Run Region-->Run From Beginning To Line Alt+Ctrl+B. Code-->Run Region-->Run From Line to End Alt+Ctrl+E. Code-->Run Region-->Run All Alt+Ctrl+R.
 savetovariable = 1+2
 savetovariable #print 3
-assignmentoperator <- "Press Alt+- for shortcut key.  Assign values to a variable."
-assignmentoperator #print Press Alt+- for shortcut key
+assignmentoperator <- "Press Alt+- for shortcut key.  Assign values to a variable.  Read as gets."
+assignmentoperator #print Press Alt+- for shortcut key.  Assign values to a variable.  Read as gets.
 logicalT <- T
 logicalFALSE <- FALSE
 escapecharacter <- "my little\" story backslash"
@@ -24,7 +24,7 @@ typeof(charactermultipleletters) #print character
 logicalTRUE <- TRUE
 logicalTRUE #print TRUE
 typeof(logicalTRUE) #print logical
-colonoperatorascending <- 0:10 #assigns numbers 0 to 10 inclusive to colonoperatorascending
+colonoperatorascending <- 0:10 #assigns numbers 0 to 10 inclusive sequential to colonoperatorascending
 colonoperatorascending #print 0  1  2  3  4  5  6  7  8  9 10
 colonoperatordescending <- 10:0
 colonoperatordescending #print 10  9  8  7  6  5  4  3  2  1  0
@@ -32,12 +32,16 @@ sequencestartsone <- seq(10)
 sequencestartsone #print 1  2  3  4  5  6  7  8  9 10
 sequencespecifics <- seq(30,0,by=-3) #start at 30, end at 0 going down by threes
 sequencespecifics #print 30 27 24 21 18 15 12  9  6  3  0
+concatenateletterc <- c(5,4,1,6,7,2,2,3,2,8) #concatenate or combine or collect
+concatenateletterc #print 5 4 1 6 7 2 2 3 2 8
 repeatfivetimes <- rep(TRUE,5) #rep is called Replicate
 repeatfivetimes #print TRUE TRUE TRUE TRUE TRUE
 repeatsetcollate <- rep(c(TRUE,FALSE),5)
 repeatsetcollate #print TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE
 repeatsetnocollate <- rep(c(TRUE,FALSE),each=5)
 repeatsetnocollate #print TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+scanfunctionenterdata <- scan() #Enter the following numbers and press Enter after each number in the Console:  5, 6, 9, 1, 4, 8, 0, 7.  Press Enter twice to stop entering data or enter data.
+scanfunctionenterdata #print 5 6 9 1 4 8 0 7
 '''
 Vector is the basic group data; use the concatenate function c to create a vector; e.g., vectorvariable <- c(1,2,3).  Vector is one or more numbers in a one dimensional array.  The numbers are in a straight line.  Same data type such as all character or all integer.  A vector with a single number is a scalar; however, in R, it\'s a vector.  R\'s basic data object.
 List is created using the list function group vectors in one list; e.g.,  listvariable <- list(vector1, vector2, vector3).  Most flexible.  An ordered collection of elements of any data type, length, or structure.  Can be difficult.
@@ -306,6 +310,65 @@ function(value1, value2){
 }
 <bytecode: 0x564303c6cc20>
 '''
+#Import files.  R imports csv, txt, xlsx, and JSON.  Instructor recommends use rio R input output package.  rio combines R's import functions into an utility.  /home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets.  mbb is Mozart, Beethoven, and Bach Google searches.
+#Avoid importing Excel .xlsx.  Convert the .xlsx to either tab delimited or comma separated form.  Use read.delim or read.csv to import.
+rioimportcsv <- import("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.csv")
+head(rioimportcsv)
+'''
+    Month Mozart Beethoven Bach
+1 2004-01     12         8   15
+2 2004-02     12         9   15
+3 2004-03     12         9   14
+4 2004-04     12         8   14
+5 2004-05     11         9   13
+6 2004-06      9         7   12
+'''
+rioimporttxt <- import("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.txt")
+head(rioimporttxt)
+'''
+    Month Mozart Beethoven Bach
+1 2004-01     12         8   15
+2 2004-02     12         9   15
+3 2004-03     12         9   14
+4 2004-04     12         8   14
+5 2004-05     11         9   13
+6 2004-06      9         7   12
+'''
+rioimportxlsx <- import("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.xlsx") #The Excel file mbb.xlsx contains one worksheet.
+head(rioimportxlsx)
+'''
+    Month Mozart Beethoven Bach
+1 2004-01     12         8   15
+2 2004-02     12         9   15
+3 2004-03     12         9   14
+4 2004-04     12         8   14
+5 2004-05     11         9   13
+6 2004-06      9         7   12
+'''
+viewdata <- View(rioimportcsv) #rioimportcsv tab opens displaying the data.  Can display data clicking on the calendar like button in Environment tab.
+readtableimporttxt <- read.table("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.txt",head=TRUE,sep="\t") #R's built-in function import text files.  header head is TRUE there are column headings.  Seperator is tab \t; however, read.table still works if sep="\t" is missing.  A warning message appears which is ignored.  Not using rio package.
+head(readtableimporttxt)
+'''
+    Month Mozart Beethoven Bach
+1 2004-01     12         8   15
+2 2004-02     12         9   15
+3 2004-03     12         9   14
+4 2004-04     12         8   14
+5 2004-05     11         9   13
+6 2004-06      9         7   12
+'''
+readtableimportcsv <- read.table("/home/mar/R/R01_Course_Files/R01_5_4_ImportingData_Datasets/mbb.csv",head=TRUE) #R's built-in function import csv files.  header head is TRUE there are column headings.  Not using rio package.
+head(readtableimportcsv)
+'''
+  Month.Mozart.Beethoven.Bach
+1             2004-01,12,8,15
+2             2004-02,12,9,15
+3             2004-03,12,9,14
+4             2004-04,12,8,14
+5             2004-05,11,9,13
+6              2004-06,9,7,12
+'''
+viewdata <- View(readtableimportcsv) #readtableimportcsv tab opens displaying the data.  Can display data clicking on the calendar like button in Environment tab.
 #R built-in function help function
 ?mean() #Bottom right pane Help tab displays mean() function description
 #Install packages.  Instructors says best type code on Console
