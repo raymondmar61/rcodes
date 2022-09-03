@@ -1,0 +1,45 @@
+---
+title: "rprogrammingcrashcoursemarkdown"
+output: html_document
+date: '2022-09-03'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- #Basic Syntax, some hotkeys -->
+```{r}
+mystring <- "Comment me with Ctrl+Shift+C"
+print(mystring) #print "Comment me with Ctrl+Shift+C"
+7 #print 7
+x <- 1
+y <- 2
+z <- x+y
+print(z) #print 3
+```
+
+<!-- R Object:  Vector.  A vector is a value assigned to a variable -->
+```{r}
+logicalvectorvariable <- TRUE
+print(logicalvectorvariable) #print TRUE
+print(class(logicalvectorvariable)) #print logical
+numericalvectorvariable <- 23.5
+print(numericalvectorvariable) #print 23.5
+print(class(numericalvectorvariable)) #print numeric
+integervectorvariable <- 2L
+print(integervectorvariable) #print 2
+print(class(integervectorvariable)) #print integer
+stringvectorvariable <- "TRUE is a string in quotes"
+print(stringvectorvariable) #print TRUE is a string in quotes
+print(class(stringvectorvariable)) #print character
+rawvaluesvectorvariable <- charToRaw("The T and R are capitalized.")
+print(rawvaluesvectorvariable) #print 54 68 65 20 54 20 61 6e 64 20 52 20 61 72 65 20 63 61 70 69 74 61 6c 69 7a 65 64 2e
+print(class(rawvaluesvectorvariable)) #print raw
+concatenatemultiplevaluesvectorvariable <- c("red","green","yelllow") #c is concatenate or combine
+concatenatemultiplevaluesvectorvariable #print "red"     "green"   "yelllow"
+print(concatenatemultiplevaluesvectorvariable) #print "red"     "green"   "yelllow"
+print(class(concatenatemultiplevaluesvectorvariable)) #print character
+```
+
+
