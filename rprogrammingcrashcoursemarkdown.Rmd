@@ -41,5 +41,102 @@ concatenatemultiplevaluesvectorvariable #print "red"     "green"   "yelllow"
 print(concatenatemultiplevaluesvectorvariable) #print "red"     "green"   "yelllow"
 print(class(concatenatemultiplevaluesvectorvariable)) #print character
 ```
+<!-- R Object:  List.  A list contain different types of elements.  It's like a vector with multiple data types.  Begin the list function with the word list. -->
+```{r}
+listmultipledatatypes <- list(c("A","concatenate","vector"),21.3,44,sin,TRUE, c(34,89,199))
+print(listmultipledatatypes)
+'''
+[[1]]
+[1] "A"           "concatenate" "vector"     
 
+[[2]]
+[1] 21.3
+
+[[3]]
+[1] 44
+
+[[4]]
+function (x)  .Primitive("sin")
+
+[[5]]
+[1] TRUE
+
+[[6]]
+[1]  34  89 199
+'''
+```
+<!-- R Object:  Matrix.  A two-dimensional rectangular data set.  Vector is the input.  Same data type.  No names for rows and columns.  Columns are labeled  by index numbers.  In contrast, data frame is like an Excel table spreadsheet.-->
+```{r}
+matrixobject <- matrix(c("a","a","b","c","b","a"),nrow=2,ncol=3,byrow=TRUE)
+print(matrixobject)
+'''
+     [,1] [,2] [,3]
+[1,] "a"  "a"  "b" 
+[2,] "c"  "b"  "a" 
+'''
+```
+<!-- R Object:  Array.  A matrix with three or more dimensions. Instructor rarely use arrays-->
+```{r}
+arrayobject <- array(c("green","yellow","white"),c(2,3,4))
+print(arrayobject)
+'''
+, , 1
+
+     [,1]     [,2]    [,3]    
+[1,] "green"  "white" "yellow"
+[2,] "yellow" "green" "white" 
+
+, , 2
+
+     [,1]     [,2]    [,3]    
+[1,] "green"  "white" "yellow"
+[2,] "yellow" "green" "white" 
+
+, , 3
+
+     [,1]     [,2]    [,3]    
+[1,] "green"  "white" "yellow"
+[2,] "yellow" "green" "white" 
+
+, , 4
+
+     [,1]     [,2]    [,3]    
+[1,] "green"  "white" "yellow"
+[2,] "yellow" "green" "white" 
+'''
+```
+<!-- R Object:  Factors.  A factor stores the vector along with the distinct values as labels.  The labels are the character irrespective of whether it's numeric or character or booelan in the input vector.  Useful for statistical modeling.  The nlevels function gives the count of levels. -->
+```{r}
+vectorapplecolors <- c("green","yellow","red","yellow","red","green","red")
+print(vectorapplecolors) #print "green"  "yellow" "red"    "yellow" "red"    "green"  "red" 
+vectorapplecolorsfactor <- factor(vectorapplecolors)
+print(vectorapplecolorsfactor)
+'''
+[1] green  yellow red    yellow red    green  red   
+Levels: green red yellow
+'''
+```
+<!-- R Object:  Data Frames.  Most useful.  Multiple lists of vector equal length.  Each vector is the same data type.  Use data.frame function name. Click on the white icon in Environment tab to view the data frame as a table easier to view -->
+```{r}
+dataframetemplate <- data.frame(column1headerlabel <- c("String","data","vector"),column2headerlabel <- c(152,171,5),column3headerlabel <- c(TRUE,FALSE,TRUE))
+print(dataframetemplate)
+realworlddataframecolumn1 <- c("Each","column","row","separate","object")
+realworlddataframecolumn2 <- c("Blank","cells","or vector","entry",NA)
+realworlddataframecolumn3 <- c(1,2,3,4,5)
+dataframerealworld <- data.frame(column1label=realworlddataframecolumn1,objectcolumn=realworlddataframecolumn2,datagoesdown=realworlddataframecolumn3)
+print(dataframerealworld)
+'''
+column1label objectcolumn datagoesdown
+Each	Blank	1		
+column	cells	2		
+row	or vector	3		
+separate	entry	4		
+object	NA	5		
+'''
+```
+
+```{r}
+library(tidyverse)
+mpg
+```
 
