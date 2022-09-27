@@ -7,6 +7,18 @@ date: '2022-09-03'
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+<!-- Shortcut keys -->
+```{r}
+insertcode <- "Alt+Ctrl+I"
+executecodeincurrentchunk <- "Ctrl+Shift+Enter"
+duplicateline <- "Ctrl+Shift+D"
+scroll <- "Ctrl+Up Arrow or Ctrl+Down Arrow"
+swaplines <- "Alt+Up Arrow or Alt+Down Arrow"
+surroundtextparenthesis <- "Highlight text to surround with parenthesis."
+intelligsense <- "Ctrl+Spacebar"
+insertpipe <- "Ctrl+Shift+M" #The pipe is %>%
+shortcutreference <- "Alt+Shift+K" #RM:  I used See All Shortcuts.. to find insertpipe
+```
 
 <!-- #Basic Syntax, some hotkeys -->
 ```{r}
@@ -17,6 +29,8 @@ x <- 1
 y <- 2
 z <- x+y
 print(z) #print 3
+rm(list=ls()) #Clear Environment tab
+detach("package:datasets",unload=TRUE) #clear packages or uncheck packages datasets in Packages tab System Library
 ```
 
 <!-- R Object:  Vector.  A vector is a value assigned to a variable -->
@@ -105,7 +119,7 @@ print(arrayobject)
 [2,] "yellow" "green" "white" 
 '''
 ```
-<!-- R Object:  Factors.  A factor stores the vector along with the distinct values as labels.  The labels are the character irrespective of whether it's numeric or character or booelan in the input vector.  Useful for statistical modeling.  The nlevels function gives the count of levels. -->
+<!-- R Object:  Factors.  A factor stores the vector along with the distinct values as labels.  The labels are the character irrespective of whether it's numeric or character or boolean in the input vector.  Useful for statistical modeling.  The nlevels function gives the count of levels. -->
 ```{r}
 vectorapplecolors <- c("green","yellow","red","yellow","red","green","red")
 print(vectorapplecolors) #print "green"  "yellow" "red"    "yellow" "red"    "green"  "red" 
@@ -120,6 +134,13 @@ Levels: green red yellow
 ```{r}
 dataframetemplate <- data.frame(column1headerlabel <- c("String","data","vector"),column2headerlabel <- c(152,171,5),column3headerlabel <- c(TRUE,FALSE,TRUE))
 print(dataframetemplate)
+'''
+column1headerlabel....c..String....data....vector.. column2headerlabel....c.152..171..5. column3headerlabel....c.TRUE..FALSE..TRUE.
+String	152	TRUE		
+data	171	FALSE		
+vector	5	TRUE		
+3 rows
+'''
 realworlddataframecolumn1 <- c("Each","column","row","separate","object")
 realworlddataframecolumn2 <- c("Blank","cells","or vector","entry",NA)
 realworlddataframecolumn3 <- c(1,2,3,4,5)
@@ -136,7 +157,106 @@ object	NA	5
 ```
 
 ```{r}
-library(tidyverse)
-mpg
+library(tidyverse) #a group of packages and functions
+mpg %>% #a dataset from tidyverse.  Car mileage per gallon.  RM:  add the pipe %>% to reference mpg as the dataset for the dplyrs'.  The pipe goes to the next line to process.  Pipe is a chain.
+dplyr::filter(model=="a4") %>% #return rows satisfying the filter conditions.  Exact filter syntax dplyr::(filter(dataset name,columnname*filter logical syntax*))
+dplyr::arrange(displ, cyl) %>%  #sort the dataset by columns.  The second dplyr dplyr arrange takes the first dplyr filter and sorts the results for which the pipe is at the end of the first dplyr.
+# dplyr::mutate(columnnameboolean = year < 2000) %>% #create new column columnameboolean TRUE for year column less than 2000, FALSE year column 2000 and greater
+# dplyr::transmute(full_wheel_drive=drv=="f") #create new table dataset one column full_wheel-drive for which drv column rows with f becomes TRUE.
+# dplyr::transmute(full_wheel_drive=drv=="f", manufacturerfullname=manufacturer=="audi") #create new table dataset one column full_wheel-drive for which drv column rows with f becomes TRUE and second column manufacturerfullname for which manufacturer column rows with audi becomes TRUE.
+dplyr::mutate(columnnameboolean = year < 2000,full_wheel_drive=drv=="f") %>% #create new column columnameboolean TRUE for year column less than 2000, FALSE year column 2000 and greater and new column full_wheel-drive for which drv column rows with f becomes TRUE.
+dplyr::select(-drv) #select columns to be returned.  The minus sign means exclude column.
+mpg %>% 
+dplyr::count() #returns count of rows
+mpg %>% 
+dplyr::count(model, sort=T) #returns model column and the count of each model
+'''
+model n
+4runner 4wd	6			
+a4	7			
+a4 quattro	8			
+a6 quattro	3			
+altima	6			
+c1500 suburban 2wd	5			
+camry	7	
+...
+'''
+detach("package:tidyverse",unload=TRUE)
 ```
 
+```{r}
+library(tidyverse) #a group of packages and functions
+library(ggplot2)
+#geom is a layer  ggplot(date = mpg) itself returns a blank chart.  geoms geom_... is the chart type.  mapping the aes or aesthetic.  %>% is invalid in ggplot2.  Maybe ggplot3 said instructor.
+#Facet is the chart display or chart looks.
+#ggplot(data = datasetname) + geomentricfunction(mapping = aes(columns to plot x=x-axiscolumn, y=y-axiscolumn))
+basicggplot <- ggplot(data = mpg) + geom_point(mapping = aes(x=displ, y = hwy))
+basicggplot #plotted a scatter plot chart mpg dataset x-axis displ and y-axis hwy denoting the displ and its hwy.
+ggplot(data = mpg) + geom_point(mapping = aes(x=displ, y = hwy, color=class)) #distinguishes each plot point by class column color coded
+ggplot(data = mpg) + geom_point(mapping = aes(x=displ, y = hwy))+facet_wrap(~class, nrow=2) #Multiple small scatterplot charts separated by class column.  Two rows.
+ggplot(data = mpg) + geom_point(mapping = aes(x=displ, y = hwy))+facet_grid(drv~cyl) #Multiple small scatterplot charts by driv column on the right and cyl column on top.  x-axis displ is on the bottom.  y-axis hwy is on the left.  For example, top right scatterplot chart is 4 wheel drive and 8 cylinder cars.
+ggplot(data = mpg) + geom_point(mapping = aes(x=displ, y = hwy)) #A basic ggplot chart which is a scatterplot chart.
+ggplot(data = mpg) + geom_point(mapping = aes(x=displ,y = hwy)) + geom_smooth(mapping = aes(x=displ, y=hwy)) #geom_smooth is a curved regression line minimal amount of distance to the average representing all points
+ggplot(data = mpg, mapping = aes(x=displ,y = hwy)) + geom_point(mapping=aes(color=class))+geom_smooth() #geom_smooth is a curved regression line minimal amount of distance to the average representing all points and distinguishes each plot point by class column color coded
+ggplot(data=diamonds)+geom_bar(mapping=aes(x=cut)) #bar chart from the diamonds data set in ggplot2 by cut.  Cut is the x-axis.  The count is the y-axis.
+```
+
+```{r}
+#EDA exploratory data analysis
+library(tidyverse) #a group of packages and functions
+library(ggplot2)
+smallercaratdiamonds <- diamonds %>% filter(carat<3) #diamonds is the data set
+smallercaratdiamonds[1:5,]
+'''
+carat cut color clarity depth table price x y z
+0.23	Ideal	E	SI2	61.5	55	326	3.95	3.98	2.43
+0.21	Premium	E	SI1	59.8	61	326	3.89	3.84	2.31
+0.23	Good	E	VS1	56.9	65	327	4.05	4.07	2.31
+0.29	Premium	I	VS2	62.4	58	334	4.20	4.23	2.63
+0.31	Good	J	SI2	63.3	58	335	4.34	4.35	2.75
+'''
+ggplot(data=smallercaratdiamonds, mapping=aes(x=carat)) + geom_histogram(binwidth=0.1) #histogram chart by the smallercaratdiamonds custom dataset from diamonds dataset.  Each bin is 0.1.
+ggplot(data=mpg) + geom_boxplot(mapping=aes(x=reorder(class, hwy, FUN=median),y=hwy)) #boxplot chart by car class in x-axis pickup, suv, minivan, 2seater, subcompact, compact, midsize.  y-axis is hwy.  Dots above and below the boxplot are the outliers.  Line in the middle is the median.
+diamonds %>% 
+dplyr::count(color,cut) %>% 
+ggplot(mapping=aes(x=color,y=cut))+geom_tile(mapping = aes(fill=n)) #heat map chart color in x-axis, cut in y-axis
+#same as
+diamonds %>% 
+count(color,cut) %>% 
+ggplot(mapping=aes(x=color,y=cut))+geom_tile(mapping = aes(fill=n)) #heat map chart color in x-axis, cut in y-axis
+```
+
+```{r}
+library(ggplot2)
+diamonds[1:5,]
+'''
+carat cut color clarity depth table price x y z
+0.23	Ideal	E	SI2	61.5	55	326	3.95	3.98	2.43
+0.21	Premium	E	SI1	59.8	61	326	3.89	3.84	2.31
+0.23	Good	E	VS1	56.9	65	327	4.05	4.07	2.31
+0.29	Premium	I	VS2	62.4	58	334	4.20	4.23	2.63
+0.31	Good	J	SI2	63.3	58	335	4.34	4.35	2.75
+'''
+#Export an RStudio dataset
+write.table(diamonds,file="/home/mar/rstudio/exportdiamondsdataframe.txt", sep=" ", row.names=FALSE, col.names=TRUE)
+write.table(diamonds,file="/home/mar/rstudio/exportdiamondsdataframewithcommas.csv", sep=",", row.names=FALSE, col.names=TRUE)
+#Import a dataset
+library(readr)
+datasetdiamonds <- read_csv("/home/mar/rstudio/exportdiamondsdataframewithcommas.csv")
+datasetdiamonds[1:5,]
+'''
+carat cut color clarity depth table price x y z
+0.23	Ideal	E	SI2	61.5	55	326	3.95	3.98	2.43
+0.21	Premium	E	SI1	59.8	61	326	3.89	3.84	2.31
+0.23	Good	E	VS1	56.9	65	327	4.05	4.07	2.31
+0.29	Premium	I	VS2	62.4	58	334	4.20	4.23	2.63
+0.31	Good	J	SI2	63.3	58	335	4.34	4.35	2.75
+'''
+quickdataset <- tribble(~column1pregannt,~column2header,~column3name,"column1yes",NA,10,"column2no",20,12) #use tribble function
+quickdataset
+'''
+column1pregannt column2header column3name
+column1yes	NA	10
+column2no	20	12
+'''
+```
