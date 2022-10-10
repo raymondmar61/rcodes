@@ -260,3 +260,29 @@ column1yes	NA	10
 column2no	20	12
 '''
 ```
+
+```{r}
+#https://github.com/milesmcbain/datapasta
+#install.packages("datapasta", repos = c(mm = "https://milesmcbain.r-universe.dev", getOption("repos")))
+library(datapasta) #Access below menu bar Addins-->Calculate package test coverage, DATAPASTA.  Below DATAPASTA are options to paste data copied in the clipboard.  For example, paste as tribble
+assignavariabletopastetribble <- tibble::tribble(
+    ~`"carat"`,        ~`"cut"`, ~`"color"`, ~`"clarity"`, ~`"depth"`, ~`"table"`, ~`"price"`, ~`"x"`, ~`"y"`, ~`"z"`,
+          0.23,     "\"Ideal\"",    "\"E\"",    "\"SI2\"",       61.5,         55,       326L,   3.95,   3.98,   2.43,
+          0.21,   "\"Premium\"",    "\"E\"",    "\"SI1\"",       59.8,         61,       326L,   3.89,   3.84,   2.31,
+          0.23,      "\"Good\"",    "\"E\"",    "\"VS1\"",       56.9,         65,       327L,   4.05,   4.07,   2.31,
+          0.29,   "\"Premium\"",    "\"I\"",    "\"VS2\"",       62.4,         58,       334L,    4.2,   4.23,   2.63,
+          0.31,      "\"Good\"",    "\"J\"",    "\"SI2\"",       63.3,         58,       335L,   4.34,   4.35,   2.75,
+          0.24, "\"Very Good\"",    "\"J\"",   "\"VVS2\"",       62.8,         57,       336L,   3.94,   3.96,   2.48,
+          0.24, "\"Very Good\"",    "\"I\"",   "\"VVS1\"",       62.3,         57,       336L,   3.95,   3.98,   2.47,
+          0.26, "\"Very Good\"",    "\"H\"",    "\"SI1\"",       61.9,         55,       337L,   4.07,   4.11,   2.53,
+          0.22,      "\"Fair\"",    "\"E\"",    "\"VS2\"",       65.1,         61,       337L,   3.87,   3.78,   2.49,
+              )
+```
+
+```{r}
+#https://github.com/dreamRs/esquisse
+install.packages("esquisse") #Pronounced "s-keese" French for sketch.
+library(esquisse) #Access below menu bar Addins-->ESQUISSE, 'ggplot2' builder.  Upload a dataset; in particular, save a dataset to a variable the variable is under Select a data.frame drop down box.  Another window opens where the user drag and drop the variables in the dataset and choose options.  Creates the R code to copy and paste to RStudio.  RM:  I use assignavariabletopastetribble above at datapasta to practice.
+```
+
+
