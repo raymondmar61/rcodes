@@ -298,3 +298,118 @@ vore    Primates Rodentia
   herbi        1       16
   omni        10        2
 '''
+
+#Data visualization data visuals
+plot(pressure) #returns a chart temperature x-axis and pressure y-axis plots temperature and pressure
+ggplot(data = starwars, mapping=aes(x=gender))+geom_bar() #returns a vertical bar chart gender x-axis and count y-axis plots number of feminine, masculine, and NA.  aes is aesthetics.
+starwars %>% drop_na(height) %>% ggplot(mapping=aes(x=height))+geom_histogram() #returns a histogram chart height x-axis and count y-axis.  Take starwars data frame and remove rows where the height is na.  x-axis height is from 0 to 300; x-axis labels 100, 150, 200, 250.  tidyverse package must be active to use drop_na().
+#or
+starwars %>% drop_na(height) %>% ggplot(aes(height))+geom_histogram()
+starwars %>% drop_na(height) %>% ggplot(mapping=aes(x=height))+geom_boxplot(fill="steelblue")+theme_bw()+labs(title="Boxplot of height", x="x-axis Height Of Characters") #returns a boxplot chart x-axis height of characters.  Blue color.  Take starwars data frame and remove rows where the height is na.
+starwars %>% drop_na(height) %>% filter(sex %in% c("male","female")) %>% ggplot(mapping=aes(x=height, color=sex, fill=sex))+geom_density(alpha=0.2)+theme_bw() #returns a density chart wave length like is the plot.  Two wave lenghts male and female.  x-axis height.  y-axis density from 0.00 to 0.05.  Density is the probability of an observation of any particular value.  Alpha is the color darkness for which 1 is default and 0 is transparent.
+starwars %>% filter(mass<200) %>% ggplot(aes(height, mass, color=sex))+geom_point(size=5,alpha=0.5)+ theme_bw() + labs(title="Height and mass by sex") #returns a scatterplot x-axis height, mass y-axis plot female, male, none, and NA.  Star Wars characters must be less than 200.  Alpha is transparency 1 is sold and default and 0 is transparent.
+starwars %>% filter(mass <200) %>% ggplot(aes(height, mass, color=sex))+geom_point(size=3,alpha=0.8)+geom_smooth()+facet_wrap(~sex)+theme_bw()+labs(title="Height and mass by sex")  #returns four charts height x-axis, mass y=axis.  From top left to bottom left female, male, NA, and none.  Smoothed model chart.  geom_smooth() draws and linear model line.  facet_wrap creates small charts by sex which are the four charts.
+
+#Analysis, analyze
+library(gapminder)
+help(gapminder) #Description:  Excerpt of the Gapminder data on life expectancy, GDP per capita, and population by country.
+View(gapminder) #Opens tab displaying the gapminder data frame data table
+gapminder %>% filter(continent %in% c("Africa","Europe")) %>% t.test(lifeExp ~ continent, data = .,altrnative="two.sided",paired=FALSE)
+'''
+	Welch Two Sample t-test
+
+data:  lifeExp by continent
+t = -49.551, df = 981.2, p-value < 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -23.95076 -22.12595
+sample estimates:
+mean in group Africa mean in group Europe 
+            48.86533             71.90369 
+'''
+#ANOVA
+gapminder %>% filter(year==2007) %>% filter(continent %in% c("Americas","Europe","Asia")) %>% aov(lifeExp~continent, data=.) %>% summary()
+'''
+            Df Sum Sq Mean Sq F value   Pr(>F)    
+continent    2  755.6   377.8   11.63 3.42e-05 ***
+Residuals   85 2760.3    32.5                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+'''
+gapminder %>% filter(year==2007) %>% filter(continent %in% c("Americas","Europe","Asia")) %>% aov(lifeExp~continent, data=.) %>% TukeyHSD()
+'''
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = lifeExp ~ continent, data = .)
+
+$continent
+                     diff        lwr        upr     p adj
+Asia-Americas   -2.879635 -6.4839802  0.7247099 0.1432634
+Europe-Americas  4.040480  0.3592746  7.7216854 0.0279460
+Europe-Asia      6.920115  3.4909215 10.3493088 0.0000189
+'''
+gapminder %>% filter(year==2007) %>% filter(continent %in% c("Americas","Europe","Asia")) %>% aov(lifeExp~continent, data=.) %>% TukeyHSD() %>% plot() #returns three boxplots like plots in one chart
+#Chi Squared
+head(iris)
+'''
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+'''
+flowers <- iris %>% mutate(Size=cut(Sepal.Length,breaks=3,labels=c("Small","Medium","Large"))) %>% select(Species,Size)
+#Chi Squared goodness of fit test
+flowers %>% select(Size) %>% table() %>% chisq.test()
+'''
+	Chi-squared test for given probabilities
+
+data:  .
+X-squared = 28.44, df = 2, p-value = 6.673e-07
+'''
+#Chi Squared test of independence
+flowers %>% table() %>% chisq.test()
+'''
+	Pearson\'s Chi-squared test
+
+data:  .
+X-squared = 111.63, df = 4, p-value < 2.2e-16
+'''
+#Linear Model
+head(cars,10)
+'''
+   speed dist
+1      4    2
+2      4   10
+3      7    4
+4      7   22
+5      8   16
+6      9   10
+7     10   18
+8     10   26
+9     10   34
+10    11   17
+'''
+cars %>% lm(dist~speed, data=.) %>% summary()
+'''
+Call:
+lm(formula = dist ~ speed, data = .)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-29.069  -9.525  -2.272   9.215  43.201 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -17.5791     6.7584  -2.601   0.0123 *  
+speed         3.9324     0.4155   9.464 1.49e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 15.38 on 48 degrees of freedom
+Multiple R-squared:  0.6511,	Adjusted R-squared:  0.6438 
+F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12
+'''
