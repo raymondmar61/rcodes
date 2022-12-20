@@ -102,3 +102,84 @@ combinedata[which(combinedata$Name %in% findduplicatenames),] #return the rows w
 892         892     None      3     Kelly, Mr. James   male 34.5     0     0 330911 7.8292              Q
 898         898     None      3 Connolly, Miss. Kate female 30.0     0     0 330972 7.6292              Q
 '''
+library(stringr) #Library Simple, consistent wrappers for common string operations
+nameswithmiss <- combinedata[which(str_detect(combinedata$Name, "Miss.")),] #which is like the where clause in SQL.  Return all names with "Miss.".  Column names are case sensitive.
+nameswithmiss[1:5,] #return the first five rows and return all the columns
+'''
+   PassengerId Survived Pclass                                 Name    Sex Age SibSp Parch           Ticket    Fare Cabin Embarked
+3            3        1      3               Heikkinen, Miss. Laina female  26     0     0 STON/O2. 3101282  7.9250              S
+11          11        1      3      Sandstrom, Miss. Marguerite Rut female   4     1     1          PP 9549 16.7000    G6        S
+12          12        1      1             Bonnell, Miss. Elizabeth female  58     0     0           113783 26.5500  C103        S
+15          15        0      3 Vestrom, Miss. Hulda Amanda Adolfina female  14     0     0           350406  7.8542              S
+23          23        1      3          McGowan, Miss. Anna "Annie" female  15     0     0           330923  8.0292              Q
+'''
+nameswithmrs <- combinedata[which(str_detect(combinedata$Name,"Mrs.")),]
+nameswithmrs[1:5,] #return the first five rows and return all the columns
+'''
+   PassengerId Survived Pclass                                                Name    Sex Age SibSp Parch   Ticket    Fare Cabin
+2            2        1      1 Cumings, Mrs. John Bradley (Florence Briggs Thayer) female  38     1     0 PC 17599 71.2833   C85
+4            4        1      1        Futrelle, Mrs. Jacques Heath (Lily May Peel) female  35     1     0   113803 53.1000  C123
+9            9        1      3   Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg) female  27     0     2   347742 11.1333      
+10          10        1      2                 Nasser, Mrs. Nicholas (Adele Achem) female  14     1     0   237736 30.0708      
+16          16        1      2                    Hewlett, Mrs. (Mary D Kingcome)  female  55     0     0   248706 16.0000      
+   Embarked
+2         C
+4         S
+9         S
+10        C
+16        S
+'''
+nameswithmr <- combinedata[which(train$Sex=="male"),] #search names with Mr. using Sex column is equal to male
+nameswithmr[1:5,] #notice PassengerID 8 is Master. instead of Mr.
+'''
+  PassengerId Survived Pclass                           Name  Sex Age SibSp Parch    Ticket    Fare Cabin Embarked
+1           1        0      3        Braund, Mr. Owen Harris male  22     1     0 A/5 21171  7.2500              S
+5           5        0      3       Allen, Mr. William Henry male  35     0     0    373450  8.0500              S
+6           6        0      3               Moran, Mr. James male  NA     0     0    330877  8.4583              Q
+7           7        0      1        McCarthy, Mr. Timothy J male  54     0     0     17463 51.8625   E46        S
+8           8        0      3 Palsson, Master. Gosta Leonard male   2     3     1    349909 21.0750              S
+'''
+#Extract the title from the Name column.  Purpose is find a relationship between a person's title, Pclass column and Survived column.  Create a function.
+extracttitle <- function(name) {
+    name <- as.character(name)
+    if (length(grep("Miss.",name))>0){ #grep is the same grep in Linux which looks for a string inside text
+        return("Miss.")
+    } else if (length(grep("Master.",name))>0){
+        return("Master.")
+    } else if (length(grep("Mrs.",name))>0){
+        return("Mrs.")
+    } else if (length(grep("Mr.", name))>0){
+        return("Mr.")
+    } else {
+        return("Other")
+    }
+}
+titles <- NULL
+for(i in 1:nrow(combinedata)){
+    titles <- c(titles,extracttitle(combinedata[i,"Name"])) #Name is the Name column in dataframe combinedata
+}
+titles[1:10] #print [1] "Mr."     "Mrs."    "Miss."   "Mrs."    "Mr."     "Mr."     "Mr."     "Master." "Mrs."    "Mrs."   
+combinedata$Title <- as.factor(titles) #Convert titles to a factor and add column insert column Title
+combinedata[1:5,]
+'''
+  PassengerId Survived Pclass                                                Name    Sex Age SibSp Parch           Ticket    Fare
+1           1        0      3                             Braund, Mr. Owen Harris   male  22     1     0        A/5 21171  7.2500
+2           2        1      1 Cumings, Mrs. John Bradley (Florence Briggs Thayer) female  38     1     0         PC 17599 71.2833
+3           3        1      3                              Heikkinen, Miss. Laina female  26     0     0 STON/O2. 3101282  7.9250
+4           4        1      1        Futrelle, Mrs. Jacques Heath (Lily May Peel) female  35     1     0           113803 53.1000
+5           5        0      3                            Allen, Mr. William Henry   male  35     0     0           373450  8.0500
+  Cabin Embarked Title
+1              S   Mr.
+2   C85        C  Mrs.
+3              S Miss.
+4  C123        S  Mrs.
+5              S   Mr.
+'''
+#Plot the findings.  Use the first 891 rows because we have survived labels for the train set.
+ggplot(combinedata[1:891,], aes(x=Title, fill=Survived))+geom_bar(width=0.5)+facet_wrap(~Pclass)+ggtitle("Chart title Pclass")+xlab("X label Name Title")+ylab("Y label Total Count")+labs(fill="Survived") #return a bar chart with three sets of bars charts by Pclass 1, 2, 3.  Each set x-axis is the name titles Master Miss Mr Mrs Other and y-axis is the count.  Each bar plot is separated by Survived 0 or 1.
+table(combinedata$Sex)
+'''
+female   male 
+   466    843 
+'''
+#
