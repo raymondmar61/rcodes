@@ -109,3 +109,13 @@ malerowsfilterrow[1:6,c("Survived","Name","Age")] #c is concatenate.
 '
 #or reference column index number column number
 malerowsfilterrow[1:6,c(2,4,6)]
+#install ggplot2
+#install.packages("ggplot2")
+library(ggplot2) #activate ggplot2
+ggplot(titanicloaddataasdataframe,aes(x=FamilySize,fill=SurvivedLabel))+theme_bw()+facet_wrap(Sex ~ Pclass)+geom_histogram(binwidth=1) #six histograms charts.  x-axis family size.  y-axis count.  Top three female by pclass 1, 2, 3 first class, second class, third class.  Bottom three male by pclass 1, 2, 3 first class, second class, third class.  Count how many died and how many survived; survived bottom and died top.
+#install dplyr A Grammar Of Data Manipulation.  data pivots.  Pronounced d-piler.
+#install.packages("dplyr")
+library(dplyr)
+#Ctrl+Shift+M inserts %>%
+pivot <- titanicloaddataasdataframe %>% group_by(Pclass, Sex, SurvivedLabel) %>% summarize(AverageFamilySize=mean(FamilySize),PassengerCount=n()) %>% arrange(Pclass, Sex, SurvivedLabel)
+View(pivot) #pivot table.  Columns from left to right Pclass, Sex,  SurvivedLabel, AverageFamilySize, PassengerCount.  The Average Familiy Size and PassengerCount are arranged by Pclass, Sex, and SurvivedLabel such as 1 female Died, 1 female Survived, 1 male Died, 1 male Survived, 2 female Died, 2 female Survived, . . . .
