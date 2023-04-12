@@ -400,3 +400,33 @@ load(file.choose()) #Can't use to open an RStudio file.  RM:  I don't know why.
 #Writing Scripts in R ｜ R Tutorial 1.12 ｜ MarinStatsLectures [qqz_D1vzS5M]
 #Scripts allow user to pick up where he or she left off on a project.  Can reproduce analysis ran earlier.  A script is a set of commands which includes commenting what each code does.  RM:  In plain English, it's a R file with R code to run R.
 #Press tab or Ctrl+Spacebar for the intellisense or suggestions list.
+
+#How to Install Packages in R ｜ R Tutorial 1.13 ｜ MarinStatsLectures [3RWb5U3X-T8]
+#The Simple Way to Install a Package in R (with 8 Code Examples).pdf.  https://www.dataquest.io/blog/install-package-r/
+install.packages()
+install.packages("epiR") #epiR: Tools for the Analysis of Epidemiological Data
+library(epiR) #Error in library(epiR) : there is no package called ‘epiR’
+help(package=epiR) #Open Help tab for package epiR
+remove.packages("epiR") #Delete package
+#ERROR: dependencies ‘sf’, ‘flextable’, ‘officer’ are not available for package ‘epiR’.  Install multiple packages.
+install.packages(c('sf','flextable','officer'),dependencies = TRUE)
+install.packages(c('mapproj','plyr','rgeos','sp','spatstat','spData'))
+install.packages(c('rgeos')) #mar@mar-VirtualBox:~$ sudo apt install libgeos-dev  https://stackoverflow.com/questions/53389181/installing-the-r-package-rgeos-on-linux-geos-config-not-found-or-not-executab
+install.packages('units',dependencies = TRUE) #Successful after typing from a previous attempt install units reading the error codes
+install.packages(c('systemfonts','textshaping',dependencies = TRUE))
+#RM:  Reinstalled rstudio after updating R.
+install.packages("ggplot2", dependencies = TRUE)
+install.packages("tidyverse", dependencies = TRUE)
+install.packages("dplyr", dependencies = TRUE)
+install.packages("tidyr", dependencies = TRUE)
+install.packages("stringr", dependencies = TRUE)
+install.packages("lubridate", dependencies = TRUE)
+install.packages("httr", dependencies = TRUE)
+install.packages("ggvis", dependencies = TRUE)
+install.packages("shiny", dependencies = TRUE)
+install.packages("rio", dependencies = TRUE)
+install.packages("rmarkdown", dependencies = TRUE)
+install.packages("esquisse", dependencies = TRUE)
+install.packages("tseries", dependencies = TRUE)
+install.packages("knitr", dependencies = TRUE)
+
