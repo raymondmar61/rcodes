@@ -537,3 +537,57 @@ function(number1,number2){
 numbersonlydataentryinconsole <- scan() #Basic scan() function.  Numbers only.  Press enter twice to stop
 numbersonlydataentryinconsole #print 45.00      98.00     248.00       0.58     197.00 1999999.00
 
+#Apply function which is a for loop
+dataframeexpenses <- read.csv("/home/mar/rstudio/endgamecsvexpenses.csv", head=TRUE)
+averageamountmarginstwocolumn <- apply(X=dataframeexpenses["Amount"], MARGIN = 2,FUN = mean,na.rm=FALSE)
+averageamountmarginstwocolumn #print Amount\n 47.46389
+multiplecolumnsaverages <- apply(X=dataframeexpenses[c("Amount","Tax")], MARGIN = 2, FUN = mean, na.rm=TRUE)
+multiplecolumnsaverages
+'
+   Amount       Tax 
+47.463889  1.883434 
+'
+sumamounttaxmarginsonerow <- apply(X=dataframeexpenses[c("Amount","Tax")], MARGIN = 1, FUN = sum, na.rm=TRUE)
+head(sumamounttaxmarginsonerow) #print 9.36 12.19 30.20 28.31 42.18 32.51
+#FUN= multiple options such as FUN=max, percentiles FUN=quantile, probs=c(0.2,.80) for 20% percentile and 80% percentile.
+linechart <- apply(X=dataframeexpenses["Amount"],MARGIN = 2,FUN = plot, type="l",main="Main title",xlab="x label",ylab="ylabel")
+amountbudgetedexpensescolumns <- dataframeexpenses[c("Amount","Subtract.From.Budgeted.Expenses")]
+averageamountyesnobudgetedexpenses <- tapply(X=amountbudgetedexpensescolumns$Amount, INDEX=amountbudgetedexpensescolumns$Subtract.From.Budgeted.Expenses, FUN=mean, na.rm=FALSE)
+averageamountyesnobudgetedexpenses
+'
+   FALSE     TRUE 
+58.25232 18.27858 
+'
+tapply(X=amountbudgetedexpensescolumns$Amount, INDEX=amountbudgetedexpensescolumns$Subtract.From.Budgeted.Expenses, FUN=summary)
+'
+$No
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-5284.85     4.81    11.94    58.25    30.82  5284.85 
+
+$Yes
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-196.64    3.00    7.94   18.28   14.84 1294.85 
+'
+tapply(X=amountbudgetedexpensescolumns$Amount, INDEX=amountbudgetedexpensescolumns$Subtract.From.Budgeted.Expenses, FUN=quantile, probs=c(0.2,.80))
+'
+$No
+   20%    80% 
+ 3.796 40.834 
+
+$Yes
+   20%    80% 
+ 2.194 19.470 
+'
+tapply(X=dataframeexpenses$Amount, INDEX=list(dataframeexpenses$Payment.Method, dataframeexpenses$Subtract.From.Budgeted.Expenses), FUN=mean, na.rm=TRUE)
+'
+                       FALSE       TRUE
+                          NA  13.130000
+Cash               19.519677  10.170237
+Check              84.810880  39.250000
+Gift Card-Amazon   24.881250   9.780000
+Gift Card-Costco   19.668000         NA
+Gift Card-REI      53.140000         NA
+Gift Card-Safeway   5.000000         NA
+Gift Card-Target   10.806190  15.695000
+...
+'
